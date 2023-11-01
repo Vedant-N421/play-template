@@ -1,4 +1,3 @@
-[debug] "not up to date. inChanged = true, force = false
-[debug] Updating ProjectRef(uri("file:/Users/vedant.nemane/Documents/GitHub/play-template/project/"), "play-template-build")...
-[debug] Done updating ProjectRef(uri("file:/Users/vedant.nemane/Documents/GitHub/play-template/project/"), "play-template-build")
-[warn] There may be incompatibilities among your library dependencies; run 'evicted' to see detailed eviction warnings.
+[0m[[0m[0mdebug[0m] [0m[0mnot up to date. inChanged = false, force = false[0m
+[0m[[0m[0mdebug[0m] [0m[0mUpdating ProjectRef(uri("file:/Users/vedant.nemane/Documents/GitHub/play-template/project/"), "play-template-build")...[0m
+[0m[[0m[0mdebug[0m] [0m[0mDone updating ProjectRef(uri("file:/Users/vedant.nemane/Documents/GitHub/play-template/project/"), "play-template-build")[0m

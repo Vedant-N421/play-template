@@ -45,10 +45,10 @@ class Routes(
     ("""GET""", this.prefix, """controllers.HomeController.index()"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """assets/""" + "$" + """file<.+>""", """controllers.Assets.versioned(path:String = "/public", file:Asset)"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """api""", """controllers.ApplicationController.index"""),
-    ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """create""", """controllers.ApplicationController.create(id:String)"""),
+    ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """create/""" + "$" + """id<[^/]+>""", """controllers.ApplicationController.create(id:String)"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """read/""" + "$" + """id<[^/]+>""", """controllers.ApplicationController.read(id:String)"""),
-    ("""PUT""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """update""", """controllers.ApplicationController.update(id:String)"""),
-    ("""DELETE""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """delete""", """controllers.ApplicationController.delete(id:String)"""),
+    ("""PUT""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """update/""" + "$" + """id<[^/]+>""", """controllers.ApplicationController.update(id:String)"""),
+    ("""DELETE""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """delete/""" + "$" + """id<[^/]+>""", """controllers.ApplicationController.delete(id:String)"""),
     Nil
   ).foldLeft(List.empty[(String,String,String)]) { (s,e) => e.asInstanceOf[Any] match {
     case r @ (_,_,_) => s :+ r.asInstanceOf[(String,String,String)]
@@ -112,7 +112,7 @@ class Routes(
 
   // @LINE:10
   private[this] lazy val controllers_ApplicationController_create3_route = Route("POST",
-    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("create")))
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("create/"), DynamicPart("id", """[^/]+""",true)))
   )
   private[this] lazy val controllers_ApplicationController_create3_invoker = createInvoker(
     ApplicationController_2.create(fakeValue[String]),
@@ -122,7 +122,7 @@ class Routes(
       "create",
       Seq(classOf[String]),
       "POST",
-      this.prefix + """create""",
+      this.prefix + """create/""" + "$" + """id<[^/]+>""",
       """""",
       Seq()
     )
@@ -148,7 +148,7 @@ class Routes(
 
   // @LINE:12
   private[this] lazy val controllers_ApplicationController_update5_route = Route("PUT",
-    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("update")))
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("update/"), DynamicPart("id", """[^/]+""",true)))
   )
   private[this] lazy val controllers_ApplicationController_update5_invoker = createInvoker(
     ApplicationController_2.update(fakeValue[String]),
@@ -158,7 +158,7 @@ class Routes(
       "update",
       Seq(classOf[String]),
       "PUT",
-      this.prefix + """update""",
+      this.prefix + """update/""" + "$" + """id<[^/]+>""",
       """""",
       Seq()
     )
@@ -166,7 +166,7 @@ class Routes(
 
   // @LINE:13
   private[this] lazy val controllers_ApplicationController_delete6_route = Route("DELETE",
-    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("delete")))
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("delete/"), DynamicPart("id", """[^/]+""",true)))
   )
   private[this] lazy val controllers_ApplicationController_delete6_invoker = createInvoker(
     ApplicationController_2.delete(fakeValue[String]),
@@ -176,7 +176,7 @@ class Routes(
       "delete",
       Seq(classOf[String]),
       "DELETE",
-      this.prefix + """delete""",
+      this.prefix + """delete/""" + "$" + """id<[^/]+>""",
       """""",
       Seq()
     )
@@ -205,7 +205,7 @@ class Routes(
   
     // @LINE:10
     case controllers_ApplicationController_create3_route(params@_) =>
-      call(params.fromQuery[String]("id", None)) { (id) =>
+      call(params.fromPath[String]("id", None)) { (id) =>
         controllers_ApplicationController_create3_invoker.call(ApplicationController_2.create(id))
       }
   
@@ -217,13 +217,13 @@ class Routes(
   
     // @LINE:12
     case controllers_ApplicationController_update5_route(params@_) =>
-      call(params.fromQuery[String]("id", None)) { (id) =>
+      call(params.fromPath[String]("id", None)) { (id) =>
         controllers_ApplicationController_update5_invoker.call(ApplicationController_2.update(id))
       }
   
     // @LINE:13
     case controllers_ApplicationController_delete6_route(params@_) =>
-      call(params.fromQuery[String]("id", None)) { (id) =>
+      call(params.fromPath[String]("id", None)) { (id) =>
         controllers_ApplicationController_delete6_invoker.call(ApplicationController_2.delete(id))
       }
   }

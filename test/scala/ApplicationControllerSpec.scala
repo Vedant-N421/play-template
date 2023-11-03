@@ -7,11 +7,12 @@ import play.api.test.Helpers._
 import play.api.http.Status
 import play.api.mvc.Result
 
-import scala.concurrent.Future
+import javax.inject.Inject
+import scala.concurrent.{ExecutionContext, Future}
 
-class ApplicationControllerSpec extends BaseSpecWithApplication {
+class ApplicationControllerSpec @Inject()(implicit val ec: ExecutionContext) extends BaseSpecWithApplication {
   val TestApplicationController = new ApplicationController(
-    component
+    component, repository
   )
 
   "ApplicationController .index" should {

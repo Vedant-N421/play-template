@@ -7,7 +7,7 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 # we need to add an app route that references the new controller and method
 GET     /api     controllers.ApplicationController.index
 
-POST     /create/:id     controllers.ApplicationController.create(id: String)
+POST     /create     controllers.ApplicationController.create()
 GET     /read/:id   controllers.ApplicationController.read(id: String)
 PUT     /update/:id   controllers.ApplicationController.update(id: String)
 DELETE     /delete/:id    controllers.ApplicationController.delete(id: String)

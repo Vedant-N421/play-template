@@ -53,9 +53,9 @@ package controllers {
     }
   
     // @LINE:10
-    def create(id:String): Call = {
+    def create(): Call = {
       
-      Call("POST", _prefix + { _defaultPrefix } + "create/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("id", id)))
+      Call("POST", _prefix + { _defaultPrefix } + "create")
     }
   
     // @LINE:13

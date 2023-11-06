@@ -71,8 +71,8 @@ package controllers.javascript {
     def create: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ApplicationController.create",
       """
-        function(id0) {
-          return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "create/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("id", id0))})
+        function() {
+          return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "create"})
         }
       """
     )

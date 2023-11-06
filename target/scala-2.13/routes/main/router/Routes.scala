@@ -45,7 +45,7 @@ class Routes(
     ("""GET""", this.prefix, """controllers.HomeController.index()"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """assets/""" + "$" + """file<.+>""", """controllers.Assets.versioned(path:String = "/public", file:Asset)"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """api""", """controllers.ApplicationController.index"""),
-    ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """create/""" + "$" + """id<[^/]+>""", """controllers.ApplicationController.create(id:String)"""),
+    ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """create""", """controllers.ApplicationController.create()"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """read/""" + "$" + """id<[^/]+>""", """controllers.ApplicationController.read(id:String)"""),
     ("""PUT""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """update/""" + "$" + """id<[^/]+>""", """controllers.ApplicationController.update(id:String)"""),
     ("""DELETE""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """delete/""" + "$" + """id<[^/]+>""", """controllers.ApplicationController.delete(id:String)"""),
@@ -112,17 +112,17 @@ class Routes(
 
   // @LINE:10
   private[this] lazy val controllers_ApplicationController_create3_route = Route("POST",
-    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("create/"), DynamicPart("id", """[^/]+""",true)))
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("create")))
   )
   private[this] lazy val controllers_ApplicationController_create3_invoker = createInvoker(
-    ApplicationController_2.create(fakeValue[String]),
+    ApplicationController_2.create(),
     play.api.routing.HandlerDef(this.getClass.getClassLoader,
       "router",
       "controllers.ApplicationController",
       "create",
-      Seq(classOf[String]),
+      Nil,
       "POST",
-      this.prefix + """create/""" + "$" + """id<[^/]+>""",
+      this.prefix + """create""",
       """""",
       Seq()
     )
@@ -205,8 +205,8 @@ class Routes(
   
     // @LINE:10
     case controllers_ApplicationController_create3_route(params@_) =>
-      call(params.fromPath[String]("id", None)) { (id) =>
-        controllers_ApplicationController_create3_invoker.call(ApplicationController_2.create(id))
+      call { 
+        controllers_ApplicationController_create3_invoker.call(ApplicationController_2.create())
       }
   
     // @LINE:11

@@ -1,1 +1,1 @@
-["scala.ApplicationControllerSpec","scala.HomeControllerSpec"]
+["controllers.HomeControllerSpec","controllers.ApplicationControllerSpec"]

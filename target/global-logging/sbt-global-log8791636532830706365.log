@@ -9,8 +9,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m> Exec(onFailure loadFailed, None, None)[0m
 [0m[[0m[0mdebug[0m] [0m[0m> Exec(loadp, None, None)[0m
 [0m[[0m[0minfo[0m] [0m[0mwelcome to sbt 1.6.2 (Oracle Corporation Java 11.0.19)[0m
-[0m[[0m[0mdebug[0m] [0m[0m      Load.loadUnit: plugins took 45.419125ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m      Load.loadUnit: defsScala took 0.105459ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m      Load.loadUnit: plugins took 34.982666ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m      Load.loadUnit: defsScala took 0.100542ms[0m
 [0m[[0m[0mdebug[0m] [0m[0m[Loading] Scanning directory /Users/vedant.nemane/.sbt/1.0/plugins[0m
 [0m[[0m[0mdebug[0m] [0m[0m[Loading] Found non-root projects [0m
 [0m[[0m[0mdebug[0m] [0m[0m[Loading] Done in /Users/vedant.nemane/.sbt/1.0/plugins, returning: ()[0m
@@ -27,27 +27,27 @@
 [0m[[0m[0mdebug[0m] [0m[0mClause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin)))[0m
 [0m[[0m[0mdebug[0m] [0m[0mClause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin))))[0m
 [0m[[0m[0mdebug[0m] [0m[0m  :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.MiniDependencyTreePlugin,sbt.plugins.JUnitXmlReportPlugin,sbt.plugins.SemanticdbPlugin)[0m
-[0m[[0m[0mdebug[0m] [0m[0mPlugins.deducer#function took 7.865459 ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m          Load.resolveProject(global-plugins) took 23.847625ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m        Load.loadTransitive: finalizeProject(Project(id global-plugins, base: /Users/vedant.nemane/.sbt/1.0/plugins, plugins: List(<none>))) took 45.562291ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mPlugins.deducer#function took 9.21775 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m          Load.resolveProject(global-plugins) took 23.140125ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m        Load.loadTransitive: finalizeProject(Project(id global-plugins, base: /Users/vedant.nemane/.sbt/1.0/plugins, plugins: List(<none>))) took 50.234584ms[0m
 [0m[[0m[0mdebug[0m] [0m[0m[Loading] Done in /Users/vedant.nemane/.sbt/1.0/plugins, returning: (global-plugins)[0m
-[0m[[0m[0mdebug[0m] [0m[0m      Load.loadUnit: loadedProjectsRaw took 53.727458ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m      Load.loadUnit: cleanEvalClasses took 0.080125ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m    Load.loadUnit(file:/Users/vedant.nemane/.sbt/1.0/plugins/, ...) took 102.694333ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Load.apply: load took 234.879ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Load.apply: resolveProjects took 2.110958ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Load.apply: finalTransforms took 26.54275ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Load.apply: config.delegates took 2.611625ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Load.apply: Def.make(settings)... took 210.106459ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Load.apply: structureIndex took 54.092708ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Load.apply: mkStreams took 0.799458ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m      Load.loadUnit: loadedProjectsRaw took 60.528375ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m      Load.loadUnit: cleanEvalClasses took 0.082291ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Load.loadUnit(file:/Users/vedant.nemane/.sbt/1.0/plugins/, ...) took 98.930042ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Load.apply: load took 220.922542ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Load.apply: resolveProjects took 2.357ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Load.apply: finalTransforms took 25.873125ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Load.apply: config.delegates took 2.599042ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Load.apply: Def.make(settings)... took 189.665167ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Load.apply: structureIndex took 54.914667ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Load.apply: mkStreams took 0.705ms[0m
 [0m[[0m[0minfo[0m] [0m[0mloading global plugins from /Users/vedant.nemane/.sbt/1.0/plugins[0m
 [0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
-[0m[[0m[0mdebug[0m] [0m[0mLoad.defaultLoad until apply took 1289.508459ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m          Load.loadUnit: plugins took 6.804ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m          Load.loadUnit: defsScala took 0.001709ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mLoad.defaultLoad until apply took 1259.07075ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m          Load.loadUnit: plugins took 5.354792ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m          Load.loadUnit: defsScala took 0.001708ms[0m
 [0m[[0m[0mdebug[0m] [0m[0m[Loading] Scanning directory /Users/vedant.nemane/Documents/GitHub/play-template/project[0m
-[0m[[0m[0mdebug[0m] [0m[0m            Load.loadUnit: mkEval took 3.227417ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m            Load.loadUnit: mkEval took 3.908625ms[0m
 [0m[[0m[0mdebug[0m] [0m[0m[Loading] Found non-root projects [0m
 [0m[[0m[0mdebug[0m] [0m[0m[Loading] Done in /Users/vedant.nemane/Documents/GitHub/play-template/project, returning: ()[0m
 [0m[[0m[0mdebug[0m] [0m[0mdeducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin)))[0m
@@ -63,27 +63,27 @@
 [0m[[0m[0mdebug[0m] [0m[0mClause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin)))[0m
 [0m[[0m[0mdebug[0m] [0m[0mClause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin))))[0m
 [0m[[0m[0mdebug[0m] [0m[0m  :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.MiniDependencyTreePlugin,sbt.plugins.JUnitXmlReportPlugin,sbt.plugins.SemanticdbPlugin)[0m
-[0m[[0m[0mdebug[0m] [0m[0mPlugins.deducer#function took 0.795708 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mPlugins.deducer#function took 2.66975 ms[0m
 [0m[[0m[0minfo[0m] [0m[0mloading settings for project play-template-build from plugins.sbt ...[0m
-[0m[[0m[0mdebug[0m] [0m[0m              Load.resolveProject(play-template-build) took 2.060208ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m            Load.loadTransitive: finalizeProject(Project(id play-template-build, base: /Users/vedant.nemane/Documents/GitHub/play-template/project, plugins: List(<none>))) took 3.158667ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m              Load.resolveProject(play-template-build) took 1.958917ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m            Load.loadTransitive: finalizeProject(Project(id play-template-build, base: /Users/vedant.nemane/Documents/GitHub/play-template/project, plugins: List(<none>))) took 4.938959ms[0m
 [0m[[0m[0mdebug[0m] [0m[0m[Loading] Done in /Users/vedant.nemane/Documents/GitHub/play-template/project, returning: (play-template-build)[0m
-[0m[[0m[0mdebug[0m] [0m[0m          Load.loadUnit: loadedProjectsRaw took 61.367541ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m          Load.loadUnit: cleanEvalClasses took 1.999833ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m        Load.loadUnit(file:/Users/vedant.nemane/Documents/GitHub/play-template/project/, ...) took 70.5035ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m      Load.apply: load took 71.407333ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m      Load.apply: resolveProjects took 0.198541ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m      Load.apply: finalTransforms took 5.005958ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m      Load.apply: config.delegates took 0.166833ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m      Load.apply: Def.make(settings)... took 57.793041ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m      Load.apply: structureIndex took 13.459042ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m      Load.apply: mkStreams took 0.001834ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m          Load.loadUnit: loadedProjectsRaw took 76.811875ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m          Load.loadUnit: cleanEvalClasses took 1.855916ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m        Load.loadUnit(file:/Users/vedant.nemane/Documents/GitHub/play-template/project/, ...) took 84.342708ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m      Load.apply: load took 84.831958ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m      Load.apply: resolveProjects took 0.066792ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m      Load.apply: finalTransforms took 5.909541ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m      Load.apply: config.delegates took 0.183792ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m      Load.apply: Def.make(settings)... took 51.64525ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m      Load.apply: structureIndex took 13.668666ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m      Load.apply: mkStreams took 0.003333ms[0m
 [0m[[0m[0minfo[0m] [0m[0mloading project definition from /Users/vedant.nemane/Documents/GitHub/play-template/project[0m
 [0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
-[0m[[0m[0mdebug[0m] [0m[0m    Load.loadUnit: plugins took 449.829708ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m    Load.loadUnit: defsScala took 0.001209ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Load.loadUnit: plugins took 543.662416ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Load.loadUnit: defsScala took 0.002083ms[0m
 [0m[[0m[0mdebug[0m] [0m[0m[Loading] Scanning directory /Users/vedant.nemane/Documents/GitHub/play-template[0m
-[0m[[0m[0mdebug[0m] [0m[0m      Load.loadUnit: mkEval took 0.125333ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m      Load.loadUnit: mkEval took 0.253625ms[0m
 [0m[[0m[0mdebug[0m] [0m[0m[Loading] Found root project root w/ remaining [0m
 [0m[[0m[0mdebug[0m] [0m[0mdeducing auto plugins based on known facts Set(Atom(play.sbt.PlayScala), Atom(sbt.plugins.CorePlugin)) and clauses Clauses(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin)))[0m
 [0m[[0m[0mdebug[0m] [0m[0mClause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin)))[0m
@@ -173,21 +173,21 @@
 [0m[[0m[0mdebug[0m] [0m[0mClause(Atom(com.typesafe.sbt.web.SbtWeb),Set(Atom(com.typesafe.sbt.jse.SbtJsEngine)))[0m
 [0m[[0m[0mdebug[0m] [0m[0mClause(Atom(com.typesafe.sbt.jse.SbtJsEngine),Set(Atom(com.typesafe.sbt.jse.SbtJsTask))))[0m
 [0m[[0m[0mdebug[0m] [0m[0m  :: deduced result: Matched(sbt.plugins.CorePlugin,play.sbt.PlayScala,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,play.sbt.PlayWeb,play.twirl.sbt.SbtTwirl,sbt.plugins.JvmPlugin,play.sbt.PlayService,play.sbt.PlayFilters,play.sbt.PlayLayoutPlugin,play.sbt.routes.RoutesCompiler,com.typesafe.sbt.jse.SbtJsTask,com.typesafe.sbt.packager.archetypes.JavaServerAppPackaging,sbt.plugins.SemanticdbPlugin,sbt.plugins.JUnitXmlReportPlugin,play.sbt.PlayLogback,giter8.ScaffoldPlugin,sbt.plugins.MiniDependencyTreePlugin,com.typesafe.sbt.jse.SbtJsEngine,play.sbt.PlayAkkaHttpServer,com.heroku.sbt.HerokuPlugin,com.typesafe.sbt.web.SbtWeb,com.typesafe.sbt.packager.archetypes.JavaAppPackaging,com.typesafe.sbt.packager.rpm.RpmPlugin,com.typesafe.sbt.packager.archetypes.scripts.BashStartScriptPlugin,com.typesafe.sbt.packager.windows.WindowsPlugin,com.typesafe.sbt.packager.archetypes.scripts.BatStartScriptPlugin,com.typesafe.sbt.packager.docker.DockerPlugin,com.typesafe.sbt.packager.debian.DebianPlugin,com.typesafe.sbt.packager.universal.UniversalPlugin,com.typesafe.sbt.packager.linux.LinuxPlugin,com.typesafe.sbt.SbtNativePackager)[0m
-[0m[[0m[0mdebug[0m] [0m[0mPlugins.deducer#function took 14.459125 ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mPlugins.deducer#function took 6.062417 ms[0m
 [0m[[0m[0minfo[0m] [0m[0mloading settings for project root from build.sbt ...[0m
-[0m[[0m[0mdebug[0m] [0m[0m        Load.resolveProject(root) took 44.062625ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m      Load.loadTransitive: finalizeProject(Project(id root, base: /Users/vedant.nemane/Documents/GitHub/play-template, plugins: List(play.sbt.PlayScala))) took 59.571583ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m        Load.resolveProject(root) took 48.631583ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m      Load.loadTransitive: finalizeProject(Project(id root, base: /Users/vedant.nemane/Documents/GitHub/play-template, plugins: List(play.sbt.PlayScala))) took 55.960708ms[0m
 [0m[[0m[0mdebug[0m] [0m[0m[Loading] Done in /Users/vedant.nemane/Documents/GitHub/play-template, returning: (root)[0m
-[0m[[0m[0mdebug[0m] [0m[0m    Load.loadUnit: loadedProjectsRaw took 95.80475ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m    Load.loadUnit: cleanEvalClasses took 0.684375ms[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Load.loadUnit(file:/Users/vedant.nemane/Documents/GitHub/play-template/, ...) took 546.629166ms[0m
-[0m[[0m[0mdebug[0m] [0m[0mLoad.apply: load took 547.697916ms[0m
-[0m[[0m[0mdebug[0m] [0m[0mLoad.apply: resolveProjects took 0.194917ms[0m
-[0m[[0m[0mdebug[0m] [0m[0mLoad.apply: finalTransforms took 6.326375ms[0m
-[0m[[0m[0mdebug[0m] [0m[0mLoad.apply: config.delegates took 1.167ms[0m
-[0m[[0m[0mdebug[0m] [0m[0mLoad.apply: Def.make(settings)... took 57.301417ms[0m
-[0m[[0m[0mdebug[0m] [0m[0mLoad.apply: structureIndex took 15.005709ms[0m
-[0m[[0m[0mdebug[0m] [0m[0mLoad.apply: mkStreams took 0.001958ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Load.loadUnit: loadedProjectsRaw took 99.583459ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Load.loadUnit: cleanEvalClasses took 0.984209ms[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Load.loadUnit(file:/Users/vedant.nemane/Documents/GitHub/play-template/, ...) took 644.557291ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mLoad.apply: load took 645.556083ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mLoad.apply: resolveProjects took 0.075625ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mLoad.apply: finalTransforms took 8.744042ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mLoad.apply: config.delegates took 0.4195ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mLoad.apply: Def.make(settings)... took 57.838625ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mLoad.apply: structureIndex took 20.723875ms[0m
+[0m[[0m[0mdebug[0m] [0m[0mLoad.apply: mkStreams took 0.001917ms[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m  __              __[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m  \ \     ____   / /____ _ __  __[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m   \ \   / __ \ / // __ `// / / /[0m[0m
@@ -210,33 +210,4 @@
 [0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
 [0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
 [0m[[0m[0mdebug[0m] [0m[0mExporting web-assets:play-template[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
-[0m[[0m[0minfo[0m] [0m[0mcompiling 3 Scala sources to /Users/vedant.nemane/Documents/GitHub/play-template/target/scala-2.13/classes ...[0m
-[0m[[0m[33mwarn[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/app/repositories/DataRepository.scala:43:31: Auto-application to `()` is deprecated. Supply the empty argument list `()` explicitly to invoke method headOption,[0m
-[0m[[0m[33mwarn[0m] [0m[0mor remove the empty argument list from its definition (Java-defined methods are exempt).[0m
-[0m[[0m[33mwarn[0m] [0m[0mIn Scala 3, an unapplied method like this will be eta-expanded into a function.[0m
-[0m[[0m[33mwarn[0m] [0m[0m    collection.find(byID(id)).headOption flatMap {[0m
-[0m[[0m[33mwarn[0m] [0m[0m                              ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/app/repositories/DataRepository.scala:43:50: match may not be exhaustive.[0m
-[0m[[0m[33mwarn[0m] [0m[0mIt would fail on the following input: None[0m
-[0m[[0m[33mwarn[0m] [0m[0m    collection.find(byID(id)).headOption flatMap {[0m
-[0m[[0m[33mwarn[0m] [0m[0m                                                 ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mtwo warnings found[0m
-[0m[[0m[0minfo[0m] [0m[0mcompiling 1 Scala source to /Users/vedant.nemane/Documents/GitHub/play-template/target/scala-2.13/classes ...[0m
-[0m[[0m[31merror[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/conf/routes:10:1: no arguments allowed for nullary method create: (): play.api.mvc.Action[play.api.libs.json.JsValue][0m
-[0m[[0m[31merror[0m] [0m[0mPOST     /create/:id     controllers.ApplicationController.create(id: String)[0m
-[0m[[0m[33mwarn[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/conf/routes:8:1: Auto-application to `()` is deprecated. Supply the empty argument list `()` explicitly to invoke method index,[0m
-[0m[[0m[33mwarn[0m] [0m[0mor remove the empty argument list from its definition (Java-defined methods are exempt).[0m
-[0m[[0m[33mwarn[0m] [0m[0mIn Scala 3, an unapplied method like this will be eta-expanded into a function.[0m
-[0m[[0m[33mwarn[0m] [0m[0mGET     /api     controllers.ApplicationController.index[0m
-[0m[[0m[33mwarn[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/conf/routes:8:1: Auto-application to `()` is deprecated. Supply the empty argument list `()` explicitly to invoke method index,[0m
-[0m[[0m[33mwarn[0m] [0m[0mor remove the empty argument list from its definition (Java-defined methods are exempt).[0m
-[0m[[0m[33mwarn[0m] [0m[0mIn Scala 3, an unapplied method like this will be eta-expanded into a function.[0m
-[0m[[0m[33mwarn[0m] [0m[0mGET     /api     controllers.ApplicationController.index[0m
-[0m[[0m[33mwarn[0m] [0m[0mtwo warnings found[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m
-[0m[[0m[0mdebug[0m] [0m[0mForcing garbage collection...[0m
-[0m[[0m[31merror[0m] [0m[0m(Compile / [31mcompileIncremental[0m) Compilation failed[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
 [0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m

@@ -1,0 +1,50 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(testOnly *ApplicationControllerSpec, Some(6262b2b4-9566-433f-b8a4-ff49eb3d1cfe), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Test / testOnly[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0mdebug[0m] [0m[0mExporting web-assets:play-template[0m
+[0m[[0m[0mdebug[0m] [0m[0mExporting web-assets-test:play-template[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mApplicationControllerSpec:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .index[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should return 200 OK[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .create[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should create a book in the database[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .read[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- should find a book in the database by id *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  scala.MatchError: None (of class scala.None$)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at repositories.DataRepository.$anonfun$read$1(DataRepository.scala:43)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:470)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:63)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:100)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:94)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:100)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:49)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(ForkJoinExecutorConfigurator.scala:48)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:290)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .update()[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- should update a book in the database by id *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  com.mongodb.MongoWriteException: Write operation error on server localhost:27017. Write error: WriteError{code=66, message='After applying the update, the (immutable) field '_id' was found to have been altered to _id: "hi"', details={}}.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at com.mongodb.reactivestreams.client.internal.MongoOperationPublisher.lambda$createSingleWriteRequestMono$24(MongoOperationPublisher.java:490)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at reactor.core.publisher.Mono.lambda$onErrorMap$23(Mono.java:3084)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at reactor.core.publisher.Mono.lambda$onErrorResume$25(Mono.java:3174)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onError(FluxOnErrorResume.java:88)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at reactor.core.publisher.MonoNext$NextSubscriber.onError(MonoNext.java:87)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at reactor.core.publisher.MonoFlatMap$FlatMapMain.secondError(MonoFlatMap.java:185)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at reactor.core.publisher.MonoFlatMap$FlatMapInner.onError(MonoFlatMap.java:251)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at reactor.core.publisher.FluxPeek$PeekSubscriber.onError(FluxPeek.java:214)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at reactor.core.publisher.MonoCreate$DefaultMonoSink.error(MonoCreate.java:185)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at com.mongodb.reactivestreams.client.internal.MongoOperationPublisher.lambda$sinkToCallback$30(MongoOperationPublisher.java:545)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .delete()[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should delete a book in the database by id[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 2 seconds, 282 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 3[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 0, aborted 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 2, failed 1, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m*** 1 TEST FAILED ***[0m[0m
+[0m[[0m[31merror[0m] [0m[0mFailed tests:[0m
+[0m[[0m[31merror[0m] [0m[0m	controllers.ApplicationControllerSpec[0m
+[0m[[0m[31merror[0m] [0m[0m(Test / [31mtestOnly[0m) sbt.TestsFailedException: Tests unsuccessful[0m
+[0m[[0m[31merror[0m] [0m[0mTotal time: 3 s, completed 7 Nov 2023, 12:15:23[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m

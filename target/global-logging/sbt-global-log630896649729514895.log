@@ -1,0 +1,25 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(testOnly *ApplicationControllerSpec, Some(e9771d9c-5539-4cd3-8d17-de9e0b23e827), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Test / testOnly[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0mdebug[0m] [0m[0mExporting web-assets:play-template[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 1 Scala source to /Users/vedant.nemane/Documents/GitHub/play-template/target/scala-2.13/test-classes ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mExporting web-assets-test:play-template[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mApplicationControllerSpec:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .index[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should return 200 OK[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .create[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should create a book in the database[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .read[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should find a book in the database by id[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .update()[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should update a book in the database by id[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .delete()[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should delete a book in the database by id[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 2 seconds, 264 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 5[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 1, aborted 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 5, failed 0, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mAll tests passed.[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mForcing garbage collection...[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 3 s, completed 7 Nov 2023, 12:16:54[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m

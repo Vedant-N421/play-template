@@ -28,10 +28,6 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
     }
   }
 
-  //  def index(): Action[AnyContent] = Action {
-  //    Ok("It ran!")
-  //  }
-
   def index(): Action[AnyContent] = Action.async { implicit request =>
     dataRepository.index().map {
       case Right(item: Seq[DataModel]) => Ok(Json.toJson(item))

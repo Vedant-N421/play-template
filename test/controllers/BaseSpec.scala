@@ -44,6 +44,7 @@ trait BaseSpecWithApplication extends BaseSpec with GuiceOneServerPerSuite with 
 
   lazy val fakeRequest: FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest("", "").withCSRFToken.asInstanceOf[FakeRequest[AnyContentAsEmpty.type]]
+
   implicit val messages: Messages = messagesApi.preferred(fakeRequest)
 
   def buildPost(url: String): FakeRequest[AnyContentAsEmpty.type] =

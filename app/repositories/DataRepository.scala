@@ -5,6 +5,8 @@ import org.mongodb.scala.bson.conversions.Bson
 import org.mongodb.scala.model.Filters.empty
 import org.mongodb.scala.model._
 import org.mongodb.scala.result
+import play.api.mvc.Result
+import play.api.mvc.Results.BadRequest
 import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.PlayMongoRepository
 
@@ -22,10 +24,10 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
   replaceIndexes = false
 ) {
 
-  def index(): Future[Either[Int, Seq[DataModel]]]  =
+  def index(): Future[Either[Result, Seq[DataModel]]]  =
     collection.find().toFuture().map{
       case books: Seq[DataModel] => Right(books)
-      case _ => Left(404)
+      case _ => Left(BadRequest)
     }
 
   def create(book: DataModel): Future[DataModel] =
@@ -39,23 +41,19 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
       Filters.equal("_id", id)
     )
 
-  def read(id: String): Future[DataModel] =
-    collection.find(byID(id)).headOption flatMap {
-      case Some(data) =>
-        Future(data)
-    }
+  def read(id: String): Future[Option[DataModel]] = collection.find(byID(id)).headOption.flatMap {
+    case Some(data) => Future(Some(data))
+    case _ => Future(None)
+  }
 
   def update(id: String, book: DataModel): Future[result.UpdateResult] =
     collection.replaceOne(
       filter = byID(id),
       replacement = book,
-      options = new ReplaceOptions().upsert(true) //What happens when we set this to false?
+      options = new ReplaceOptions().upsert(false) //What happens when we set this to false? Ans: the code works as intended, doesn't insert a new record.
     ).toFuture()
 
-  def delete(id: String): Future[result.DeleteResult] =
-    collection.deleteOne(
-      filter = byID(id)
-    ).toFuture()
+  def delete(id: String): Future[result.DeleteResult] = collection.deleteOne(filter = byID(id)).toFuture()
 
   def deleteAll(): Future[Unit] = collection.deleteMany(empty()).toFuture().map(_ => ()) //Hint: needed for tests
 

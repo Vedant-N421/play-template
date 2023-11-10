@@ -1,7 +1,9 @@
 package controllers
 
+//import akka.actor.typed.internal.receptionist.Platform.Service
+import com.mongodb.client.result.DeleteResult
 import models.DataModel
-import org.mongodb.scala.result.DeleteResult
+import services.LibraryService
 //import play.api.libs.json.Format.GenericFormat
 import play.api.libs.json.{JsError, JsSuccess, JsValue, Json}
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
@@ -10,7 +12,7 @@ import repositories.DataRepository
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class ApplicationController @Inject()(val controllerComponents: ControllerComponents, val dataRepository: DataRepository)(implicit val ec: ExecutionContext) extends BaseController{
+class ApplicationController @Inject()(val controllerComponents: ControllerComponents, val dataRepository: DataRepository, val service: LibraryService)(implicit val ec: ExecutionContext) extends BaseController{
 
   def create(): Action[JsValue] = Action.async(parse.json) { implicit request =>
     request.body.validate[DataModel] match {
@@ -31,14 +33,14 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
   def index(): Action[AnyContent] = Action.async { implicit request =>
     dataRepository.index().map {
       case Right(item: Seq[DataModel]) => Ok(Json.toJson(item))
-      case Left(error) => Status(error)(Json.toJson("Unable to find any books"))
+      case Left(_) => BadRequest(Json.toJson("Unable to find any books"))
     }
   }
 
   def read(id: String): Action[AnyContent] = Action.async { implicit request =>
     dataRepository.read(id: String).map {
-      case item: DataModel => Ok(Json.toJson(item))
-      case _ => BadRequest(Json.toJson("Unable to read book"))
+      case Some(item: DataModel) => Ok(Json.toJson(item))
+      case Some(_) | None => BadRequest(Json.toJson("Unable to read book"))
     }
   }
 
@@ -48,4 +50,11 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
       case _ => BadRequest(Json.toJson("Unable to delete book"))
     }
   }
+
+  def getGoogleBook(search: String, term: String): Action[AnyContent] = Action.async { implicit request =>
+    service.getGoogleBook(search = search, term = term).map { book =>
+      Ok(Json.toJson(book))
+    }
+  }
 }
+

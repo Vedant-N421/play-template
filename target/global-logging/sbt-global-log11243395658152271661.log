@@ -1,3 +1,8 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(testOnly *LibraryServiceSpec, Some(0e469094-4028-4112-98a9-3c53e0736749), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Test / testOnly[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 6 Scala sources to /Users/vedant.nemane/Documents/GitHub/play-template/target/scala-2.13/classes ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mExporting web-assets:play-template[0m
 [0m[[0m[31merror[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/app/controllers/ApplicationController.scala:56:21: No Json serializer found for type ApplicationController.this.service.Book. Try to implement an implicit Writes or Format for this type.[0m
 [0m[[0m[31merror[0m] [0m[0m      Ok(Json.toJson(book))[0m
 [0m[[0m[31merror[0m] [0m[0m                    ^[0m
@@ -16,3 +21,8 @@
 [0m[[0m[33mwarn[0m] [0m[0mGET     /api     controllers.ApplicationController.index[0m
 [0m[[0m[33mwarn[0m] [0m[0mtwo warnings found[0m
 [0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
+[0m[[0m[0mdebug[0m] [0m[0mForcing garbage collection...[0m
+[0m[[0m[31merror[0m] [0m[0m(Compile / [31mcompileIncremental[0m) Compilation failed[0m
+[0m[[0m[31merror[0m] [0m[0mTotal time: 0 s, completed 10 Nov 2023, 15:58:04[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m
+[0m[[0m[0mdebug[0m] [0m[0mForcing garbage collection...[0m

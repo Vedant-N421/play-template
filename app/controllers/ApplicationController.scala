@@ -2,7 +2,8 @@ package controllers
 
 //import akka.actor.typed.internal.receptionist.Platform.Service
 import com.mongodb.client.result.DeleteResult
-import models.DataModel
+import models.{APIError, DataModel}
+import play.mvc.Action
 import services.LibraryService
 //import play.api.libs.json.Format.GenericFormat
 import play.api.libs.json.{JsError, JsSuccess, JsValue, Json}
@@ -52,8 +53,9 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
   }
 
   def getGoogleBook(search: String, term: String): Action[AnyContent] = Action.async { implicit request =>
-    service.getGoogleBook(search = search, term = term).map { book =>
-      Ok(Json.toJson(book))
+    service.getGoogleBook(search = search, term = term).value.map {
+      case Right(book) => Ok(book)
+      case Left(_) => APIError.BadAPIResponse(404, "Couldn't get book")
     }
   }
 }

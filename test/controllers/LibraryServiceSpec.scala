@@ -1,18 +1,18 @@
 package controllers
 
+import cats.data.EitherT
 import connectors.LibraryConnector
-import models.DataModel
+import models.{APIError, DataModel}
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import play.api.http.Status._
 import play.api.libs.json.{JsValue, Json, OFormat}
 import services.LibraryService
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class LibraryServiceSpec extends BaseSpec with MockFactory with ScalaFutures with GuiceOneAppPerSuite {
-  val mockConnector = mock[LibraryConnector]
+  val mockConnector: LibraryConnector = mock[LibraryConnector]
   implicit val executionContext: ExecutionContext = app.injector.instanceOf[ExecutionContext]
   val testService = new LibraryService(mockConnector)
 
@@ -27,12 +27,8 @@ class LibraryServiceSpec extends BaseSpec with MockFactory with ScalaFutures wit
     val url: String = "testUrl"
 
     "return a book" in {
-      (mockConnector.get[DataModel](_: String)(_: OFormat[DataModel], _: ExecutionContext))
-        .expects(url, *, *)
-        .returning(Future(gameOfThrones.as[DataModel]))
-        .once()
-
-      whenReady(testService.getGoogleBook(urlOverride = Some(url), search = "", term = "")) { result =>
+      (mockConnector.get[DataModel](_: String)(_: OFormat[DataModel], _: ExecutionContext)).expects(url, *, *).returning(EitherT.rightT(Future(gameOfThrones.as[DataModel])))
+      testService.getGoogleBook(urlOverride = Some(url), search = "", term = "") { result =>
         assert(result == gameOfThrones.as[DataModel])
       }
     }
@@ -40,13 +36,8 @@ class LibraryServiceSpec extends BaseSpec with MockFactory with ScalaFutures wit
 
   "return an error" in {
     val url: String = "testUrl"
-
-    (mockConnector.get[DataModel](_: String)(_: OFormat[DataModel], _: ExecutionContext))
-      .expects(url, *, *)
-      .returning(Future[Error]) // How do we return an error?
-      .once()
-
-    whenReady(testService.getGoogleBook(urlOverride = Some(url), search = "", term = "")) { result =>
+    (mockConnector.get[DataModel](_: String)(_: OFormat[DataModel], _: ExecutionContext)).expects(url, *, *).returning(Future[APIError])
+    testService.getGoogleBook(urlOverride = Some(url), search = "", term = "") { result =>
       assert(result == (s"https://www.googleapis.com/books/v1/volumes?q="))
     }
   }

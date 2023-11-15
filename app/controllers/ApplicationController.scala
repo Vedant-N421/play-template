@@ -3,7 +3,6 @@ package controllers
 //import akka.actor.typed.internal.receptionist.Platform.Service
 import com.mongodb.client.result.DeleteResult
 import models.DataModel
-import play.mvc.Action
 import services.LibraryService
 //import play.api.libs.json.Format.GenericFormat
 import play.api.libs.json.{JsError, JsSuccess, JsValue, Json}
@@ -13,7 +12,12 @@ import repositories.DataRepository
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class ApplicationController @Inject()(val controllerComponents: ControllerComponents, val dataRepository: DataRepository, val service: LibraryService)(implicit val ec: ExecutionContext) extends BaseController{
+class ApplicationController @Inject() (
+    val controllerComponents: ControllerComponents,
+    val dataRepository: DataRepository,
+    val service: LibraryService
+)(implicit val ec: ExecutionContext)
+    extends BaseController {
 
   def create(): Action[JsValue] = Action.async(parse.json) { implicit request =>
     request.body.validate[DataModel] match {
@@ -23,10 +27,10 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
     }
   }
 
-  def update(id: String): Action[JsValue] = Action.async(parse.json){ implicit request =>
+  def update(id: String): Action[JsValue] = Action.async(parse.json) { implicit request =>
     request.body.validate[DataModel] match {
       case JsSuccess(dataModel: DataModel, _) =>
-        dataRepository.update(id=id, book=dataModel).map(_ => Accepted)
+        dataRepository.update(id = id, book = dataModel).map(_ => Accepted)
       case JsError(_) => Future(BadRequest)
     }
   }
@@ -52,11 +56,11 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
     }
   }
 
-  def getGoogleBook(search: String, term: String): Action[AnyContent] = Action.async { implicit request =>
-    service.getGoogleBook(search = search, term = term).value.map {
-      case Right(book) => Ok(Json.toJson(book))
-      case Left(error) => Status(error.httpResponseStatus)(error.reason)
-    }
+  def getGoogleBook(search: String, term: String): Action[AnyContent] = Action.async {
+    implicit request =>
+      service.getGoogleBook(search = search, term = term).value.map {
+        case Right(book) => Ok(Json.toJson(book))
+        case Left(error) => Status(error.httpResponseStatus)(error.reason)
+      }
   }
 }
-

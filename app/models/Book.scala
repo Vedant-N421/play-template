@@ -1,14 +1,19 @@
 package models
 
-import play.api.libs.json.{JsValue, Json, OFormat}
+import play.api.libs.json.{Json, OFormat}
 
-case class Book(body: JsValue, book_ids: List[String], book_names: List[String]){
-  def get_book_names(body: JsValue): Unit = {
-    val root: Seq[JsValue] = (body \\ "id")
-    print(root)
-  }
+case class Book(_id: String, name: String, description: String, numSales: Int) {
+//  def apply(body: JsValue): Unit = {
+//    val book_ids: collection.Seq[JsValue] = body \\ "id"
+//    print(book_ids)
+//  }
+
+//  def apply(body: JsValue): Unit = {
+//    print(body)
+//  }
 }
 
 object Book {
   implicit val formats: OFormat[Book] = Json.format[Book]
+//  implicit val writes: Writes[Book] = Json.writes[Book]
 }

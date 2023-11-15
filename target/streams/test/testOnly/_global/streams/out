@@ -2,31 +2,17 @@
 [0m[[0m[0mdebug[0m] [0m[0mForking tests - parallelism = false[0m
 [0m[[0m[0mdebug[0m] [0m[0mCreate a single-thread test executor[0m
 [0m[[0m[0mdebug[0m] [0m[0mRunner for org.scalatest.tools.Framework produced 1 initial tasks for 1 tests.[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(controllers.ApplicationControllerSpec, sbt.ForkMain$SubclassFingerscan@4ae3c1cd, false, [SuiteSelector])[0m
-[0m[[0m[0minfo[0m] [0m[0m[32mApplicationControllerSpec:[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .index[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m- should return 200 OK[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .create[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m- should create a book in the database[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .create with a bad request[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(controllers.LibraryServiceSpec, sbt.ForkMain$SubclassFingerscan@4ae3c1cd, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mLibraryServiceSpec:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mgetGoogleBook[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should return a book[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32man error case[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should return an error[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .read[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m- should find a book in the database by id[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .read with a bad request[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m- should return an error[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .update()[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m- should update a book in the database by id[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .update() with a bad request[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m- should return an error[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .delete()[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m- should delete a book in the database by id[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .delete() with a bad request[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m- should return an error[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 9 events.[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 2 seconds, 512 milliseconds.[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 9[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 2 events.[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 1 second, 906 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 2[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 1, aborted 0[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 9, failed 0, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 2, failed 0, canceled 0, ignored 0, pending 0[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mAll tests passed.[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mPassed tests:[0m
-[0m[[0m[0mdebug[0m] [0m[0m	controllers.ApplicationControllerSpec[0m
+[0m[[0m[0mdebug[0m] [0m[0m	controllers.LibraryServiceSpec[0m

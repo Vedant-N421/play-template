@@ -5,8 +5,6 @@ import org.mongodb.scala.bson.conversions.Bson
 import org.mongodb.scala.model.Filters.empty
 import org.mongodb.scala.model._
 import org.mongodb.scala.result
-import play.api.mvc.Result
-import play.api.mvc.Results.BadRequest
 import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.PlayMongoRepository
 
@@ -24,7 +22,7 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
   replaceIndexes = false
 ) {
 
-  def index(): Future[Either[Result, Seq[DataModel]]]  =
+  def index(): Future[Either[APIError, Seq[DataModel]]]  =
     collection.find().toFuture().map{
       case books: Seq[DataModel] => Right(books)
       case _ => Left(APIError.BadAPIResponse(404, "Books cannot be found"))

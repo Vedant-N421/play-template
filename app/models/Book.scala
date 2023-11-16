@@ -15,5 +15,4 @@ case class Book(_id: String, name: String, description: String, numSales: Int) {
 
 object Book {
   implicit val formats: OFormat[Book] = Json.format[Book]
-//  implicit val writes: Writes[Book] = Json.writes[Book]
 }

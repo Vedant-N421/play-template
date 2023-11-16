@@ -2,14 +2,14 @@ package controllers
 
 import cats.data.EitherT
 import connectors.LibraryConnector
-import models.{APIError, Book, DataModel}
+import models.{APIError, Book}
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.libs.json.{JsValue, Json, OFormat}
 import services.LibraryService
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 class LibraryServiceSpec
     extends BaseSpec
@@ -34,13 +34,14 @@ class LibraryServiceSpec
         .get[Book](_: String)(_: OFormat[Book], _: ExecutionContext))
         .expects(url, *, *)
         .returning(EitherT.rightT(gameOfThrones.as[Book]))
-      testService.getGoogleBook(urlOverride = Some(url), search = "", term = "").map {
-        (result: Book) =>
-          println(result.toString)
-          assert(result == gameOfThrones.as[Book])
+        .once()
+      whenReady(testService.getGoogleBook(urlOverride = Some(url), search = "", term = "").value) {
+        result =>
+          assert(result == Right(gameOfThrones.as[Book]))
       }
     }
   }
+
   "an error case" should {
     "return an error" in {
       val url: String = "testUrl"
@@ -48,11 +49,11 @@ class LibraryServiceSpec
         .get[Book](_: String)(_: OFormat[Book], _: ExecutionContext))
         .expects(url, *, *)
         .returning(EitherT.leftT(APIError.BadAPIResponse(500, "Could not connect")))
-      testService.getGoogleBook(urlOverride = Some(url), search = "", term = "")
-//      testService.getGoogleBook(urlOverride = Some(url), search = "", term = "").map {
-//        result =>
-//          assert(result == APIError.BadAPIResponse(500, "Could not connect"))
-//      }
+        .once()
+      whenReady(testService.getGoogleBook(urlOverride = Some(url), search = "", term = "").value) {
+        result =>
+          assert(result == Left(APIError.BadAPIResponse(500, "Could not connect")))
+      }
     }
   }
 }

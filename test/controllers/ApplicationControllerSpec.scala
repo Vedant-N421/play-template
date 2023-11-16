@@ -1,16 +1,13 @@
 package controllers
 
 import models.DataModel
-import play.api.http.{HttpConfiguration, Status}
-import play.api.libs.json.{JsSuccess, JsValue, Json}
-import play.api.mvc.{AnyContent, Result}
-import play.api.mvc.Results.BadRequest
-import play.api.mvc.request.DefaultRequestFactory
-import play.api.test.{FakeRequest, FakeRequestFactory}
+import play.api.http.Status
+import play.api.libs.json.{JsValue, Json}
+import play.api.mvc.Result
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
-import javax.inject.Inject
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 class ApplicationControllerSpec extends BaseSpecWithApplication {
   override def beforeEach(): Unit = repository.deleteAll()

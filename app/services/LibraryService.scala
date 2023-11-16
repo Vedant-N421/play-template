@@ -4,7 +4,6 @@ import cats.data.EitherT
 import connectors.LibraryConnector
 import models.{APIError, Book}
 
-//import java.awt.print.Book
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 

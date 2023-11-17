@@ -43,7 +43,7 @@ class ApplicationController @Inject() (
   def read(id: String): Action[AnyContent] = Action.async { implicit request =>
     dataRepository.read(id: String).map {
       case Some(item: DataModel) => Ok(Json.toJson(item))
-      case Some(_) | None => BadRequest(Json.toJson("Unable to read book"))
+      case _ => BadRequest(Json.toJson("Unable to read book"))
     }
   }
 

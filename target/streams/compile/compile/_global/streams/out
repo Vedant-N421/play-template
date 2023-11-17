@@ -1,4 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/app/controllers/ApplicationController.scala:63:31: Cannot write an instance of models.Book to HTTP response. Try to define a Writeable[models.Book][0m
-[0m[[0m[31merror[0m] [0m[0m        case Right(book) => Ok(book)[0m
-[0m[[0m[31merror[0m] [0m[0m                              ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/app/controllers/ApplicationController.scala:46:16: unbound wildcard type[0m
+[0m[[0m[31merror[0m] [0m[0m      case err:_ => {[0m
+[0m[[0m[31merror[0m] [0m[0m               ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m

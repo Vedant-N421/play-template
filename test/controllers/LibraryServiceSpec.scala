@@ -28,7 +28,8 @@ class LibraryServiceSpec
   )
 
   "getGoogleBook" should {
-    val url: String = "testUrl"
+//    val url: String = "testUrl"
+    val url: String = "https://www.googleapis.com/books/v1/volumes?q=flowers+inauthor"
     "return a book" in {
       (mockConnector
         .get[Book](_: String)(_: OFormat[Book], _: ExecutionContext))
@@ -56,4 +57,5 @@ class LibraryServiceSpec
       }
     }
   }
+
 }

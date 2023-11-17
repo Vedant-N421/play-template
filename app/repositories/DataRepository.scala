@@ -12,18 +12,21 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: ExecutionContext) extends PlayMongoRepository[DataModel](
-  collectionName = "dataModels",
-  mongoComponent = mongoComponent,
-  domainFormat = DataModel.formats,
-  indexes = Seq(IndexModel(
-    Indexes.ascending("_id")
-  )),
-  replaceIndexes = false
-) {
+class DataRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+    extends PlayMongoRepository[DataModel](
+      collectionName = "dataModels",
+      mongoComponent = mongoComponent,
+      domainFormat = DataModel.formats,
+      indexes = Seq(
+        IndexModel(
+          Indexes.ascending("_id")
+        )
+      ),
+      replaceIndexes = false
+    ) {
 
-  def index(): Future[Either[APIError, Seq[DataModel]]]  =
-    collection.find().toFuture().map{
+  def index(): Future[Either[APIError, Seq[DataModel]]] =
+    collection.find().toFuture().map {
       case books: Seq[DataModel] => Right(books)
       case _ => Left(APIError.BadAPIResponse(404, "Books cannot be found"))
     }
@@ -45,15 +48,20 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
   }
 
   def update(id: String, book: DataModel): Future[result.UpdateResult] =
-    collection.replaceOne(
-      filter = byID(id),
-      replacement = book,
-      options = new ReplaceOptions().upsert(false) //What happens when we set this to false? Ans: the code works as intended, doesn't insert a new record.
-    ).toFuture()
+    collection
+      .replaceOne(
+        filter = byID(id),
+        replacement = book,
+        options = new ReplaceOptions().upsert(
+          false
+        ) // What happens when we set this to false? Ans: the code works as intended, doesn't insert a new record.
+      )
+      .toFuture()
 
-  def delete(id: String): Future[result.DeleteResult] = collection.deleteOne(filter = byID(id)).toFuture()
+  def delete(id: String): Future[result.DeleteResult] =
+    collection.deleteOne(filter = byID(id)).toFuture()
 
-  def deleteAll(): Future[Unit] = collection.deleteMany(empty()).toFuture().map(_ => ()) //Hint: needed for tests
+  def deleteAll(): Future[Unit] =
+    collection.deleteMany(empty()).toFuture().map(_ => ()) // Hint: needed for tests
 
 }
-

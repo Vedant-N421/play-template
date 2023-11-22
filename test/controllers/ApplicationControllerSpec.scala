@@ -7,7 +7,9 @@ import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
-import scala.concurrent.Future
+import java.util.concurrent.TimeUnit
+import scala.concurrent.duration.{Duration, DurationInt}
+import scala.concurrent.{Await, Future}
 
 class ApplicationControllerSpec extends BaseSpecWithApplication {
   override def beforeEach(): Unit = repository.deleteAll()
@@ -54,6 +56,22 @@ class ApplicationControllerSpec extends BaseSpecWithApplication {
     }
   }
 
+  "ApplicationController .create x 2" should {
+    "create a book in the database, but then handle the error of creating the same thing twice" in {
+      beforeEach()
+      val request: FakeRequest[JsValue] =
+        buildPost("/create").withBody[JsValue](Json.toJson(dataModel))
+      val createdResult: Future[Result] = TestApplicationController.create()(request)
+      assert(status(createdResult) == Status.CREATED)
+
+      val anotherRequest: FakeRequest[JsValue] =
+        buildPost("/create").withBody[JsValue](Json.toJson(dataModel))
+      val anotherResult: Future[Result] = TestApplicationController.create()(anotherRequest)
+      assert(status(anotherResult) == Status.BAD_REQUEST)
+      afterEach()
+    }
+  }
+
   "ApplicationController .read" should {
     "find a book in the database by id" in {
       beforeEach()
@@ -62,10 +80,9 @@ class ApplicationControllerSpec extends BaseSpecWithApplication {
       val createdResult: Future[Result] = TestApplicationController.create()(request)
       assert(status(createdResult) == Status.CREATED)
 
-//      println(s"-------------- Created result: ${status(createdResult)}-----------------")
-
       val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())
-      assert(status(readResult) == Status.OK)
+
+      assert(status(readResult)(5.seconds) == Status.OK)
       assert(contentAsJson(readResult).as[JsValue] == Json.toJson(dataModel))
       afterEach()
     }

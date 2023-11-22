@@ -1,6 +1,7 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/test/controllers/ApplicationControllerSpec.scala:142:57: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : play.api.test.FakeRequest[play.api.libs.json.JsValue][0m
-[0m[[0m[31merror[0m] [0m[0m required: play.api.mvc.Request[play.api.mvc.AnyContent][0m
-[0m[[0m[31merror[0m] [0m[0m        TestApplicationController.delete(dataModel._id)(deleteRequest)[0m
-[0m[[0m[31merror[0m] [0m[0m                                                        ^[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m
+[0m[[0m[33mwarn[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/test/controllers/ApplicationControllerSpec.scala:68:13: comparing values of types play.api.mvc.Result and Int using `==` will always yield false[0m
+[0m[[0m[33mwarn[0m] [0m[0m      assert(createdResult == Status.CREATED)[0m
+[0m[[0m[33mwarn[0m] [0m[0m            ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/test/controllers/ApplicationControllerSpec.scala:71:58: comparing values of types play.api.mvc.Result and Int using `==` will always yield false[0m
+[0m[[0m[33mwarn[0m] [0m[0m        s"-------------- Created result: ${createdResult == Status.CREATED}-----------------"[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                         ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mtwo warnings found[0m

@@ -2,10 +2,10 @@ package controllers
 
 import com.mongodb.client.result.DeleteResult
 import models.DataModel
-import services.LibraryService
 import play.api.libs.json.{JsError, JsSuccess, JsValue, Json}
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import repositories.DataRepository
+import services.LibraryService
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
@@ -20,7 +20,22 @@ class ApplicationController @Inject() (
   def create(): Action[JsValue] = Action.async(parse.json) { implicit request =>
     request.body.validate[DataModel] match {
       case JsSuccess(dataModel, _) =>
-        dataRepository.create(dataModel).map(_ => Created)
+//        val isUniqueEntry = dataRepository.read(id = dataModel._id)
+//        isUniqueEntry match {
+//          case (Some(data)) => Future(BadRequest)
+//          case Failure(_) => dataRepository.create(dataModel).map(_ => Created)
+//        }
+        for {
+          book <- dataRepository.read(dataModel._id)
+          res = book match {
+            case Some(item: DataModel) => BadRequest(Json.toJson("Duplicate book!"))
+            case _ | None =>
+              dataRepository.create(dataModel)
+              Created
+            //              Created(dataRepository.create(dataModel).map(_ => Created))
+          }
+        } yield res
+
       case JsError(_) => Future(BadRequest)
     }
   }
@@ -40,11 +55,21 @@ class ApplicationController @Inject() (
     }
   }
 
+//  def read(id: String): Action[AnyContent] = Action.async { implicit request =>
+//    dataRepository.read(id: String).map {
+//      case Some(item: DataModel) => Ok(Json.toJson(item))
+//      case _ => BadRequest(Json.toJson("Unable to read book"))
+//    }
+//  }
+
   def read(id: String): Action[AnyContent] = Action.async { implicit request =>
-    dataRepository.read(id: String).map {
-      case Some(item: DataModel) => Ok(Json.toJson(item))
-      case _ => BadRequest(Json.toJson("Unable to read book"))
-    }
+    for {
+      book <- dataRepository.read(id: String)
+      res = book match {
+        case Some(item: DataModel) => Ok(Json.toJson(item))
+        case _ | None => BadRequest(Json.toJson("Unable to read book"))
+      }
+    } yield res
   }
 
   def delete(id: String): Action[AnyContent] = Action.async { implicit request =>

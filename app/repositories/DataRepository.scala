@@ -31,11 +31,13 @@ class DataRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: Exe
       case _ => Left(APIError.BadAPIResponse(404, "Books cannot be found"))
     }
 
-  def create(book: DataModel): Future[DataModel] =
-    collection
-      .insertOne(book)
-      .toFuture()
-      .map(_ => book)
+  def create(book: DataModel): Future[Option[DataModel]] = {
+    (collection.find(byID(book._id))).headOption().flatMap {
+      case Some(data) => Future(None)
+      case _ => collection.insertOne(book).toFuture().map(_ => Some(book))
+    }
+
+  }
 
   private def byID(id: String): Bson =
     Filters.and(

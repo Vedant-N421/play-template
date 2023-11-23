@@ -317,9 +317,10 @@
 [0m[[0m[0minfo[0m] [0m[0m[32m- should create a book in the database[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .create with a bad request[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should return an error[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .create duplicate request[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should create a book in the database and catch the duplicate request[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .read[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[31m- should find a book in the database by id *** FAILED ***[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[31m  400 did not equal 200 (ApplicationControllerSpec.scala:67)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should find a book in the database by id[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .read with a bad request[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should return an error[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .update()[0m[0m
@@ -330,7 +331,7 @@
 [0m[[0m[0minfo[0m] [0m[0m[32m- should delete a book in the database by id[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .delete() with a bad request[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should return an error[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 9 events.[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 10 events.[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(controllers.LibraryServiceSpec, sbt.ForkMain$SubclassFingerscan@568bf312, false, [SuiteSelector])[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mLibraryServiceSpec:[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mgetGoogleBook[0m[0m
@@ -338,14 +339,14 @@
 [0m[[0m[0minfo[0m] [0m[0m[32man error case[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should return an error[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 2 events.[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 2 seconds, 952 milliseconds.[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 14[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 2 seconds, 896 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 15[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 3, aborted 0[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 10, failed 4, canceled 0, ignored 0, pending 0[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[31m*** 4 TESTS FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 12, failed 3, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m*** 3 TESTS FAILED ***[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mPassed tests:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	controllers.ApplicationControllerSpec[0m
 [0m[[0m[0mdebug[0m] [0m[0m	controllers.LibraryServiceSpec[0m
 [0m[[0m[31merror[0m] [0m[0mFailed tests:[0m
-[0m[[0m[31merror[0m] [0m[0m	controllers.ApplicationControllerSpec[0m
 [0m[[0m[31merror[0m] [0m[0m	controllers.HomeControllerSpec[0m
 [0m[[0m[31merror[0m] [0m[0m(Test / [31mtest[0m) sbt.TestsFailedException: Tests unsuccessful[0m

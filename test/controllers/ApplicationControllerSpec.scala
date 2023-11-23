@@ -1,19 +1,18 @@
 package controllers
 
 import models.DataModel
+import org.scalatest.{BeforeAndAfter, BeforeAndAfterEach}
 import play.api.http.Status
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{JsSuccess, JsValue, Json}
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
-import java.util.concurrent.TimeUnit
-import scala.concurrent.duration.{Duration, DurationInt}
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Future
 
-class ApplicationControllerSpec extends BaseSpecWithApplication {
-  override def beforeEach(): Unit = repository.deleteAll()
-  override def afterEach(): Unit = repository.deleteAll()
+class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAfterEach {
+  override def beforeEach(): Unit = await(repository.deleteAll())
+//  override def afterEach(): Unit = await(repository.deleteAll())
 
   val TestApplicationController = new ApplicationController(
     component,
@@ -30,7 +29,6 @@ class ApplicationControllerSpec extends BaseSpecWithApplication {
       beforeEach()
       val result = TestApplicationController.index()(FakeRequest())
       assert(status(result) == Status.OK)
-      afterEach()
     }
   }
 
@@ -39,9 +37,8 @@ class ApplicationControllerSpec extends BaseSpecWithApplication {
       beforeEach()
       val request: FakeRequest[JsValue] =
         buildPost("/create").withBody[JsValue](Json.toJson(dataModel))
-      val createdResult: Future[Result] = TestApplicationController.create()(request)
-      assert(status(createdResult) == Status.CREATED)
-      afterEach()
+      val createdResult: Result = await(TestApplicationController.create()(request))
+      assert(createdResult.header.status == Status.CREATED)
     }
   }
 
@@ -50,25 +47,22 @@ class ApplicationControllerSpec extends BaseSpecWithApplication {
       beforeEach()
       val request: FakeRequest[JsValue] =
         buildPost("/create").withBody[JsValue](Json.toJson(baddy))
-      val createdResult: Future[Result] = TestApplicationController.create()(request)
-      assert(status(createdResult) == Status.BAD_REQUEST)
-      afterEach()
+      val createdResult: Result = await(TestApplicationController.create()(request))
+      assert(createdResult.header.status == Status.BAD_REQUEST)
     }
   }
 
-  "ApplicationController .create x 2" should {
-    "create a book in the database, but then handle the error of creating the same thing twice" in {
+  "ApplicationController .create duplicate request" should {
+    "create a book in the database and catch the duplicate request" in {
       beforeEach()
       val request: FakeRequest[JsValue] =
         buildPost("/create").withBody[JsValue](Json.toJson(dataModel))
-      val createdResult: Future[Result] = TestApplicationController.create()(request)
-      assert(status(createdResult) == Status.CREATED)
+      val createdResult: Result = await(TestApplicationController.create()(request))
+      assert(createdResult.header.status == Status.CREATED)
 
-      val anotherRequest: FakeRequest[JsValue] =
-        buildPost("/create").withBody[JsValue](Json.toJson(dataModel))
-      val anotherResult: Future[Result] = TestApplicationController.create()(anotherRequest)
-      assert(status(anotherResult) == Status.BAD_REQUEST)
-      afterEach()
+      val anotherResult: Result = await(TestApplicationController.create()(request))
+      assert(anotherResult.header.status == Status.BAD_REQUEST)
+
     }
   }
 
@@ -77,14 +71,15 @@ class ApplicationControllerSpec extends BaseSpecWithApplication {
       beforeEach()
       val request: FakeRequest[JsValue] =
         buildPost(s"/create").withBody[JsValue](Json.toJson(dataModel))
-      val createdResult: Future[Result] = TestApplicationController.create()(request)
-      assert(status(createdResult) == Status.CREATED)
+      val createdResult: Result = await(TestApplicationController.create()(request))
+      assert(createdResult.header.status == Status.CREATED)
 
       val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())
-
-      assert(status(readResult)(5.seconds) == Status.OK)
+      assert(status(readResult) == Status.OK)
       assert(contentAsJson(readResult).as[JsValue] == Json.toJson(dataModel))
-      afterEach()
+
+//      val readResult: Result = await(TestApplicationController.read("abcd")(FakeRequest()))
+//      assert(readResult.header.status == Status.OK)
     }
   }
 
@@ -93,13 +88,13 @@ class ApplicationControllerSpec extends BaseSpecWithApplication {
       beforeEach()
       val request: FakeRequest[JsValue] =
         buildPost(s"/create").withBody[JsValue](Json.toJson(dataModel))
-      val createdResult: Future[Result] = TestApplicationController.create()(request)
-      assert(status(createdResult) == Status.CREATED)
+      val createdResult: Result = await(TestApplicationController.create()(request))
+      assert(createdResult.header.status == Status.CREATED)
 
       val readResult: Future[Result] = TestApplicationController.read(baddy)(FakeRequest())
       assert(status(readResult) == Status.BAD_REQUEST)
       assert(contentAsJson(readResult).as[JsValue] == Json.toJson("Unable to read book"))
-      afterEach()
+
     }
   }
 
@@ -109,18 +104,17 @@ class ApplicationControllerSpec extends BaseSpecWithApplication {
       // First we need to create a book
       val request: FakeRequest[JsValue] =
         buildPost(s"/create").withBody[JsValue](Json.toJson(dataModel))
-      val createdResult: Future[Result] = TestApplicationController.create()(request)
-      assert(status(createdResult) == Status.CREATED)
+      val createdResult: Result = await(TestApplicationController.create()(request))
+      assert(createdResult.header.status == Status.CREATED)
 
       // To then be updated by the following code
       val updateRequest: FakeRequest[JsValue] =
         buildPost(s"/update/${dataModel._id}").withBody[JsValue](Json.toJson(dataModel))
-      val updateResult: Future[Result] =
-        TestApplicationController.update(id = "abcd")(updateRequest)
+      val updateResult: Result =
+        await(TestApplicationController.update(id = "abcd")(updateRequest))
 
       // Check if request was accepted
-      assert(status(updateResult) == Status.ACCEPTED)
-      afterEach()
+      assert(updateResult.header.status == Status.ACCEPTED)
     }
   }
 
@@ -130,17 +124,17 @@ class ApplicationControllerSpec extends BaseSpecWithApplication {
       // First we need to create a book
       val request: FakeRequest[JsValue] =
         buildPost(s"/create").withBody[JsValue](Json.toJson(dataModel))
-      val createdResult: Future[Result] = TestApplicationController.create()(request)
-      assert(status(createdResult) == Status.CREATED)
+      val createdResult: Result = await(TestApplicationController.create()(request))
+      assert(createdResult.header.status == Status.CREATED)
 
       // To then be updated by the following code
       val updateRequest: FakeRequest[JsValue] =
         buildPost(s"/update/${dataModel._id}").withBody[JsValue](Json.toJson(baddy))
-      val updateResult: Future[Result] = TestApplicationController.update(id = baddy)(updateRequest)
+      val updateResult: Result =
+        await(TestApplicationController.update(baddy)(updateRequest))
 
       // Check if request was accepted
-      assert(status(updateResult) == Status.BAD_REQUEST)
-      afterEach()
+      assert(updateResult.header.status == Status.BAD_REQUEST)
     }
   }
 
@@ -150,16 +144,15 @@ class ApplicationControllerSpec extends BaseSpecWithApplication {
       // First we create a book to be deleted
       val request: FakeRequest[JsValue] =
         buildPost(s"/create").withBody[JsValue](Json.toJson(dataModel))
-      val createdResult: Future[Result] = TestApplicationController.create()(request)
+      val createdResult: Result = await(TestApplicationController.create()(request))
       // and we check that it actually does get made
-      assert(status(createdResult) == Status.CREATED)
+      assert(createdResult.header.status == Status.CREATED)
 
       // and then we check if it gets deleted
-      val deleteResult: Future[Result] =
-        TestApplicationController.delete(dataModel._id)(FakeRequest())
-      assert(status(deleteResult) == Status.ACCEPTED)
+      val deleteResult: Result =
+        await(TestApplicationController.delete(dataModel._id)(FakeRequest()))
+      assert(deleteResult.header.status == Status.ACCEPTED)
 
-      afterEach()
     }
   }
 
@@ -169,15 +162,15 @@ class ApplicationControllerSpec extends BaseSpecWithApplication {
       // First we create a book to be deleted
       val request: FakeRequest[JsValue] =
         buildGet(s"/create").withBody[JsValue](Json.toJson(dataModel))
-      val createdResult: Future[Result] = TestApplicationController.create()(request)
+      val createdResult: Result = await(TestApplicationController.create()(request))
       // and we check that it actually does get made
-      assert(status(createdResult) == Status.CREATED)
+      assert(createdResult.header.status == Status.CREATED)
 
       // and the code will still return an accepted if it found nothing to delete
-      val deleteResult: Future[Result] = TestApplicationController.delete(baddy)(FakeRequest())
-      assert(status(deleteResult) == Status.ACCEPTED)
+      val deleteResult: Result =
+        await(TestApplicationController.delete(baddy)(FakeRequest()))
+      assert(deleteResult.header.status == Status.ACCEPTED)
 
-      afterEach()
     }
   }
 

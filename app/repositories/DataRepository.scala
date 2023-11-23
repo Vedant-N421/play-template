@@ -36,7 +36,6 @@ class DataRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: Exe
       case Some(data) => Future(None)
       case _ => collection.insertOne(book).toFuture().map(_ => Some(book))
     }
-
   }
 
   private def byID(id: String): Bson =

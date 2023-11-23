@@ -20,22 +20,10 @@ class ApplicationController @Inject() (
   def create(): Action[JsValue] = Action.async(parse.json) { implicit request =>
     request.body.validate[DataModel] match {
       case JsSuccess(dataModel, _) =>
-//        val isUniqueEntry = dataRepository.read(id = dataModel._id)
-//        isUniqueEntry match {
-//          case (Some(data)) => Future(BadRequest)
-//          case Failure(_) => dataRepository.create(dataModel).map(_ => Created)
-//        }
-        for {
-          book <- dataRepository.read(dataModel._id)
-          res = book match {
-            case Some(item: DataModel) => BadRequest(Json.toJson("Duplicate book!"))
-            case _ | None =>
-              dataRepository.create(dataModel)
-              Created
-            //              Created(dataRepository.create(dataModel).map(_ => Created))
-          }
-        } yield res
-
+        dataRepository.create(dataModel).map {
+          case Some(_) => Created
+          case None => BadRequest
+        }
       case JsError(_) => Future(BadRequest)
     }
   }
@@ -55,16 +43,9 @@ class ApplicationController @Inject() (
     }
   }
 
-//  def read(id: String): Action[AnyContent] = Action.async { implicit request =>
-//    dataRepository.read(id: String).map {
-//      case Some(item: DataModel) => Ok(Json.toJson(item))
-//      case _ => BadRequest(Json.toJson("Unable to read book"))
-//    }
-//  }
-
   def read(id: String): Action[AnyContent] = Action.async { implicit request =>
     for {
-      book <- dataRepository.read(id: String)
+      book <- dataRepository.read(id)
       res = book match {
         case Some(item: DataModel) => Ok(Json.toJson(item))
         case _ | None => BadRequest(Json.toJson("Unable to read book"))

@@ -1,8 +1,15 @@
-[0m[[0m[0mdebug[0m] [0m[0m> Exec(testOnly *ApplicationControllerSpec, Some(9de1e929-8fcf-43af-bdd7-1b821db2086e), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(testOnly *ApplicationControllerSpec, Some(d76a1433-49f0-4f57-83f7-4fd269dc481c), Some(CommandSource(console0)))[0m
 [0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Test / testOnly[0m
 [0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
 [0m[[0m[0mdebug[0m] [0m[0mExporting web-assets:play-template[0m
 [0m[[0m[0minfo[0m] [0m[0mcompiling 1 Scala source to /Users/vedant.nemane/Documents/GitHub/play-template/target/scala-2.13/classes ...[0m
+[0m[[0m[33mwarn[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/app/repositories/DataRepository.scala:46:79: Auto-application to `()` is deprecated. Supply the empty argument list `()` explicitly to invoke method headOption,[0m
+[0m[[0m[33mwarn[0m] [0m[0mor remove the empty argument list from its definition (Java-defined methods are exempt).[0m
+[0m[[0m[33mwarn[0m] [0m[0mIn Scala 3, an unapplied method like this will be eta-expanded into a function.[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def read(id: String): Future[Option[DataModel]] = collection.find(byID(id)).headOption.flatMap {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                              ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 1 Scala source to /Users/vedant.nemane/Documents/GitHub/play-template/target/scala-2.13/test-classes ...[0m
 [0m[[0m[0mdebug[0m] [0m[0mExporting web-assets-test:play-template[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationControllerSpec:[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .index[0m[0m
@@ -12,8 +19,7 @@
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .create with a bad request[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should return an error[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .create duplicate request[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[31m- should create a book in the database and catch the duplicate request *** FAILED ***[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[31m  201 did not equal 400 (ApplicationControllerSpec.scala:64)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should create a book in the database and catch the duplicate request[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .read[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should find a book in the database by id[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .read with a bad request[0m[0m
@@ -26,14 +32,11 @@
 [0m[[0m[0minfo[0m] [0m[0m[32m- should delete a book in the database by id[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .delete() with a bad request[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should return an error[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 2 seconds, 479 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 2 seconds, 429 milliseconds.[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 10[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 1, aborted 0[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 9, failed 1, canceled 0, ignored 0, pending 0[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[31m*** 1 TEST FAILED ***[0m[0m
-[0m[[0m[31merror[0m] [0m[0mFailed tests:[0m
-[0m[[0m[31merror[0m] [0m[0m	controllers.ApplicationControllerSpec[0m
-[0m[[0m[31merror[0m] [0m[0m(Test / [31mtestOnly[0m) sbt.TestsFailedException: Tests unsuccessful[0m
-[0m[[0m[31merror[0m] [0m[0mTotal time: 3 s, completed 23 Nov 2023, 12:18:39[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 10, failed 0, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mAll tests passed.[0m[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 3 s, completed 23 Nov 2023, 15:31:33[0m
 [0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m
 [0m[[0m[0mdebug[0m] [0m[0mForcing garbage collection...[0m

@@ -53,6 +53,8 @@ class ApplicationController @Inject() (
     } yield res
   }
 
+  def readAny[T]()
+
   def delete(id: String): Action[AnyContent] = Action.async { implicit request =>
     dataRepository.delete(id: String).map {
       case _: DeleteResult => Accepted

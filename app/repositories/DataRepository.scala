@@ -38,15 +38,35 @@ class DataRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: Exe
     }
   }
 
+  private def byAny[T](field: String, value: T): Bson = {
+    Filters.and {
+      Filters.equal(
+        field match {
+          case field if field == "id" => "_id"
+          case field if List("name", "description", "numSales").contains(field) => field
+        },
+        value
+      )
+    }
+  }
+
   private def byID(id: String): Bson =
     Filters.and(
       Filters.equal("_id", id)
     )
 
-  def read(id: String): Future[Option[DataModel]] = collection.find(byID(id)).headOption.flatMap {
-    case Some(data) => Future(Some(data))
-    case _ => Future(None)
+  def readAny[T](field: String, value: T): Future[Option[DataModel]] = {
+    collection.find(byAny(field, value)).headOption.flatMap {
+      case Some(data) => Future(Some(data))
+      case _ => Future(None)
+    }
   }
+
+  def read(id: String): Future[Option[DataModel]] =
+    collection.find(byID(id)).headOption.flatMap {
+      case Some(data) => Future(Some(data))
+      case _ => Future(None)
+    }
 
   def update(id: String, book: DataModel): Future[result.UpdateResult] =
     collection
@@ -59,10 +79,14 @@ class DataRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: Exe
       )
       .toFuture()
 
-  def delete(id: String): Future[result.DeleteResult] =
-    collection.deleteOne(filter = byID(id)).toFuture()
+  def delete(id: String): Future[Any] = {
+    collection.find(byID(id)).headOption().flatMap {
+      case Some(data) => collection.deleteOne(filter = byID(id)).toFuture()
+      case _ => Future(println("INFO: Book not found, so no deletion with this operation!"))
+    }
+//    collection.deleteOne(filter = byID(id)).toFuture()
+  }
 
   def deleteAll(): Future[Unit] =
     collection.deleteMany(empty()).toFuture().map(_ => ()) // Hint: needed for tests
-
 }

@@ -78,8 +78,6 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
       assert(status(readResult) == Status.OK)
       assert(contentAsJson(readResult).as[JsValue] == Json.toJson(dataModel))
 
-//      val readResult: Result = await(TestApplicationController.read("abcd")(FakeRequest()))
-//      assert(readResult.header.status == Status.OK)
     }
   }
 
@@ -169,9 +167,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
       // and the code will still return an accepted if it found nothing to delete
       val deleteResult: Result =
         await(TestApplicationController.delete(baddy)(FakeRequest()))
-      assert(deleteResult.header.status == Status.ACCEPTED)
-
+      assert(deleteResult.header.status == Status.BAD_REQUEST)
     }
   }
-
 }

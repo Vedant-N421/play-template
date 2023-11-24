@@ -84,34 +84,19 @@ class DataRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: Exe
       .toFuture()
 
   def partialUpdate[T](id: String, field: String, value: T): Future[result.UpdateResult] = {
-    val oldBook = read(id)
-    val replacementBook = field match {
-      case "id" =>
-        oldBook.map { case Some(book) =>
-          book.copy(_id = value.toString)
-        }
-      case "name" =>
-        oldBook.map { case Some(book) =>
-          book.copy(name = value.toString)
-        }
-      case "description" =>
-        oldBook.map { case Some(book) =>
-          book.copy(description = value.toString)
-        }
-      case "numSales" =>
-        oldBook.map { case Some(book) =>
-          book.copy(numSales = value.asInstanceOf[Int])
-        }
-    }
-    collection
-      .replaceOne(
-        filter = byID(id),
-        replacement = Await.result(replacementBook, 2.seconds),
-        options = new ReplaceOptions().upsert(
-          false
-        )
-      )
-      .toFuture()
+    read(id)
+      .map {
+        case Some(book) =>
+          val updatedBook = field match {
+            case "id" => book.copy(_id = value.toString)
+            case "name" => book.copy(name = value.toString)
+            case "description" => book.copy(description = value.toString)
+            case "numSales" => book.copy(numSales = value.asInstanceOf[Int])
+            case _ => book
+          }
+          Await.result(update(id, updatedBook), 1.seconds)
+        case None => Await.result(update(id, DataModel("br", "br", "br", 1)), 1.seconds)
+      }
   }
 
   def delete(id: String): Future[Any] = {

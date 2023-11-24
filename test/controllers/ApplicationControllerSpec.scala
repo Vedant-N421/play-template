@@ -193,6 +193,63 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
         )
       // Check if request was accepted
       assert(updateResult.header.status == Status.ACCEPTED)
+
+      // Need to make sure that field actually did change!
+      val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())
+      assert(
+        contentAsJson(readResult).as[JsValue] == Json.toJson(
+          DataModel("abcd", "replaced", "test description", 100)
+        )
+      )
+    }
+  }
+
+  "ApplicationController .partialUpdate() with a request that does not find a book" should {
+    "should return a bad request and not change any books in the database" in {
+      beforeEach()
+      // First we need to create a book
+      val request: FakeRequest[JsValue] =
+        buildPost(s"/create").withBody[JsValue](Json.toJson(dataModel))
+      val createdResult: Result = await(TestApplicationController.create()(request))
+      assert(createdResult.header.status == Status.CREATED)
+
+      // To then be updated by the following code
+      val updateRequest: FakeRequest[JsValue] =
+        buildPost(s"/update/${dataModel._id}").withBody[JsValue](Json.toJson(dataModel))
+      val updateResult: Result =
+        await(
+          TestApplicationController.partialUpdate(id = "hiafnadfjn", "name", "replaced")(
+            updateRequest
+          )
+        )
+      // Check if request was accepted
+      assert(updateResult.header.status == Status.BAD_REQUEST)
+    }
+  }
+
+  "ApplicationController .partialUpdate() with a good request but bad field change" should {
+    "not make any changes to the book in the database" in {
+      beforeEach()
+      // First we need to create a book
+      val request: FakeRequest[JsValue] =
+        buildPost(s"/create").withBody[JsValue](Json.toJson(dataModel))
+      val createdResult: Result = await(TestApplicationController.create()(request))
+      assert(createdResult.header.status == Status.CREATED)
+
+      // To then be updated by the following code
+      val updateRequest: FakeRequest[JsValue] =
+        buildPost(s"/update/${dataModel._id}").withBody[JsValue](Json.toJson(dataModel))
+      val updateResult: Result =
+        await(
+          TestApplicationController.partialUpdate(id = "abcd", "non-existent field", "replaced")(
+            updateRequest
+          )
+        )
+      // Check if book was not edited and stays the same
+
+
+
+      assert(updateResult.header.status == Status.ACCEPTED)
     }
   }
 

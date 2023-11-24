@@ -36,6 +36,11 @@ class ApplicationController @Inject() (
     }
   }
 
+  def partialUpdate[T](id: String, field: String, value: T): Action[JsValue] =
+    Action.async(parse.json) { implicit request =>
+      dataRepository.partialUpdate(id, field, value).map(_ => Accepted)
+    }
+
   def index(): Action[AnyContent] = Action.async { implicit request =>
     dataRepository.index().map {
       case Right(item: Seq[DataModel]) => Ok(Json.toJson(item))
@@ -53,7 +58,15 @@ class ApplicationController @Inject() (
     } yield res
   }
 
-  def readAny[T]()
+  def readAny[T](field: String, value: T): Action[AnyContent] = Action.async { implicit request =>
+    for {
+      book <- dataRepository.readAny(field, value)
+      res = book match {
+        case Some(item: DataModel) => Ok(Json.toJson(item))
+        case _ | None => BadRequest(Json.toJson("Unable to read book"))
+      }
+    } yield res
+  }
 
   def delete(id: String): Action[AnyContent] = Action.async { implicit request =>
     dataRepository.delete(id: String).map {

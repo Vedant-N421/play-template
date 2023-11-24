@@ -9,7 +9,8 @@ import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.PlayMongoRepository
 
 import javax.inject.{Inject, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.duration.DurationInt
+import scala.concurrent.{Await, ExecutionContext, Future}
 
 @Singleton
 class DataRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
@@ -32,8 +33,8 @@ class DataRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: Exe
     }
 
   def create(book: DataModel): Future[Option[DataModel]] = {
-    (collection.find(byID(book._id))).headOption().flatMap {
-      case Some(data) => Future(None)
+    collection.find(byID(book._id)).headOption().flatMap {
+      case Some(_) => Future(None)
       case _ => collection.insertOne(book).toFuture().map(_ => Some(book))
     }
   }
@@ -44,6 +45,9 @@ class DataRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: Exe
         field match {
           case field if field == "id" => "_id"
           case field if List("name", "description", "numSales").contains(field) => field
+          case _ =>
+            println("Invalid field name specified, defaulting to id!")
+            "_id"
         },
         value
       )
@@ -79,12 +83,44 @@ class DataRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: Exe
       )
       .toFuture()
 
+  def partialUpdate[T](id: String, field: String, value: T): Future[result.UpdateResult] = {
+    val oldBook = read(id)
+    val replacementBook = field match {
+      case "id" =>
+        oldBook.map { case Some(book) =>
+          book.copy(_id = value.toString)
+        }
+      case "name" =>
+        oldBook.map { case Some(book) =>
+          book.copy(name = value.toString)
+        }
+      case "description" =>
+        oldBook.map { case Some(book) =>
+          book.copy(description = value.toString)
+        }
+      case "numSales" =>
+        oldBook.map { case Some(book) =>
+          book.copy(numSales = value.asInstanceOf[Int])
+        }
+    }
+    collection
+      .replaceOne(
+        filter = byID(id),
+        replacement = Await.result(replacementBook, 2.seconds),
+        options = new ReplaceOptions().upsert(
+          false
+        )
+      )
+      .toFuture()
+  }
+
   def delete(id: String): Future[Any] = {
     collection.find(byID(id)).headOption().flatMap {
-      case Some(data) => collection.deleteOne(filter = byID(id)).toFuture()
+      case Some(_) => collection.deleteOne(filter = byID(id)).toFuture()
       case _ => Future(println("INFO: Book not found, so no deletion with this operation!"))
     }
-//    collection.deleteOne(filter = byID(id)).toFuture()
+    // Old implementation used Future[Result.DeleteOne] as a return type, containing:
+    // collection.deleteOne(filter = byID(id)).toFuture()
   }
 
   def deleteAll(): Future[Unit] =

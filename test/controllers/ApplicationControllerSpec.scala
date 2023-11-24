@@ -92,7 +92,66 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
       val readResult: Future[Result] = TestApplicationController.read(baddy)(FakeRequest())
       assert(status(readResult) == Status.BAD_REQUEST)
       assert(contentAsJson(readResult).as[JsValue] == Json.toJson("Unable to read book"))
+    }
+  }
 
+  "ApplicationController .readAny" should {
+    "find a book in the database by name" in {
+      beforeEach()
+      val request: FakeRequest[JsValue] =
+        buildPost(s"/create").withBody[JsValue](Json.toJson(dataModel))
+      val createdResult: Result = await(TestApplicationController.create()(request))
+      assert(createdResult.header.status == Status.CREATED)
+
+      val readResult: Future[Result] =
+        TestApplicationController.readAny("name", "test name")(FakeRequest())
+      assert(status(readResult) == Status.OK)
+      assert(contentAsJson(readResult).as[JsValue] == Json.toJson(dataModel))
+    }
+  }
+
+  "ApplicationController .readAny" should {
+    "find a book in the database by numSales" in {
+      beforeEach()
+      val request: FakeRequest[JsValue] =
+        buildPost(s"/create").withBody[JsValue](Json.toJson(dataModel))
+      val createdResult: Result = await(TestApplicationController.create()(request))
+      assert(createdResult.header.status == Status.CREATED)
+
+      val readResult: Future[Result] =
+        TestApplicationController.readAny("numSales", 100)(FakeRequest())
+      assert(status(readResult) == Status.OK)
+      assert(contentAsJson(readResult).as[JsValue] == Json.toJson(dataModel))
+    }
+  }
+
+  "ApplicationController .readAny with a bad request" should {
+    "return an error" in {
+      beforeEach()
+      val request: FakeRequest[JsValue] =
+        buildPost(s"/create").withBody[JsValue](Json.toJson(dataModel))
+      val createdResult: Result = await(TestApplicationController.create()(request))
+      assert(createdResult.header.status == Status.CREATED)
+
+      val readResult: Future[Result] =
+        TestApplicationController.readAny("name", baddy)(FakeRequest())
+      assert(status(readResult) == Status.BAD_REQUEST)
+      assert(contentAsJson(readResult).as[JsValue] == Json.toJson("Unable to read book"))
+    }
+  }
+
+  "ApplicationController .readAny with a bad field request" should {
+    "return an error" in {
+      beforeEach()
+      val request: FakeRequest[JsValue] =
+        buildPost(s"/create").withBody[JsValue](Json.toJson(dataModel))
+      val createdResult: Result = await(TestApplicationController.create()(request))
+      assert(createdResult.header.status == Status.CREATED)
+
+      val readResult: Future[Result] =
+        TestApplicationController.readAny(baddy, "sjndfnjosfn")(FakeRequest())
+      assert(status(readResult) == Status.BAD_REQUEST)
+      assert(contentAsJson(readResult).as[JsValue] == Json.toJson("Unable to read book"))
     }
   }
 
@@ -111,6 +170,27 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
       val updateResult: Result =
         await(TestApplicationController.update(id = "abcd")(updateRequest))
 
+      // Check if request was accepted
+      assert(updateResult.header.status == Status.ACCEPTED)
+    }
+  }
+
+  "ApplicationController .partialUpdate()" should {
+    "partially updates a field of a book in the database by id" in {
+      beforeEach()
+      // First we need to create a book
+      val request: FakeRequest[JsValue] =
+        buildPost(s"/create").withBody[JsValue](Json.toJson(dataModel))
+      val createdResult: Result = await(TestApplicationController.create()(request))
+      assert(createdResult.header.status == Status.CREATED)
+
+      // To then be updated by the following code
+      val updateRequest: FakeRequest[JsValue] =
+        buildPost(s"/update/${dataModel._id}").withBody[JsValue](Json.toJson(dataModel))
+      val updateResult: Result =
+        await(
+          TestApplicationController.partialUpdate(id = "abcd", "name", "replaced")(updateRequest)
+        )
       // Check if request was accepted
       assert(updateResult.header.status == Status.ACCEPTED)
     }

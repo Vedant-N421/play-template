@@ -12,7 +12,6 @@ import scala.concurrent.Future
 
 class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAfterEach {
   override def beforeEach(): Unit = await(repository.deleteAll())
-//  override def afterEach(): Unit = await(repository.deleteAll())
 
   val TestApplicationController = new ApplicationController(
     component,
@@ -205,7 +204,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
   }
 
   "ApplicationController .partialUpdate() with a request that does not find a book" should {
-    "should return a bad request and not change any books in the database" in {
+    "return a bad request and not change any books in the database" in {
       beforeEach()
       // First we need to create a book
       val request: FakeRequest[JsValue] =
@@ -223,7 +222,15 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
           )
         )
       // Check if request was accepted
-      assert(updateResult.header.status == Status.BAD_REQUEST)
+      assert(updateResult.header.status == Status.ACCEPTED)
+
+      val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())
+      assert(
+        contentAsJson(readResult).as[JsValue] == Json.toJson(
+          DataModel("abcd", "test name", "test description", 100)
+        )
+      )
+
     }
   }
 
@@ -245,11 +252,16 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
             updateRequest
           )
         )
-      // Check if book was not edited and stays the same
-
-
-
+      // Check if update status was correct
       assert(updateResult.header.status == Status.ACCEPTED)
+
+      // Check if book was not edited and stays the same
+      val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())
+      assert(
+        contentAsJson(readResult).as[JsValue] == Json.toJson(
+          DataModel("abcd", "test name", "test description", 100)
+        )
+      )
     }
   }
 

@@ -1,13 +1,5 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/test/controllers/ApplicationControllerSpec.scala:72:21: macro applications do not support named and/or default arguments[0m
-[0m[[0m[31merror[0m] [0m[0m              assert(condition = false)[0m
-[0m[[0m[31merror[0m] [0m[0m                    ^[0m
-[0m[[0m[31merror[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/test/controllers/ApplicationControllerSpec.scala:80:17: macro applications do not support named and/or default arguments[0m
-[0m[[0m[31merror[0m] [0m[0m          assert(condition = false)[0m
-[0m[[0m[31merror[0m] [0m[0m                ^[0m
-[0m[[0m[31merror[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/test/controllers/ApplicationControllerSpec.scala:96:17: macro applications do not support named and/or default arguments[0m
-[0m[[0m[31merror[0m] [0m[0m          assert(condition = false)[0m
-[0m[[0m[31merror[0m] [0m[0m                ^[0m
-[0m[[0m[31merror[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/test/controllers/ApplicationControllerSpec.scala:108:17: macro applications do not support named and/or default arguments[0m
-[0m[[0m[31merror[0m] [0m[0m          assert(condition = false)[0m
-[0m[[0m[31merror[0m] [0m[0m                ^[0m
-[0m[[0m[31merror[0m] [0m[0mfour errors found[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/test/controllers/ApplicationControllerSpec.scala:16:35: not enough arguments for constructor ApplicationController: (controllerComponents: play.api.mvc.ControllerComponents, dataRepository: repositories.DataRepository, service: services.LibraryService, repositoryService: services.RepositoryService)(implicit ec: scala.concurrent.ExecutionContext): controllers.ApplicationController.[0m
+[0m[[0m[31merror[0m] [0m[0mUnspecified value parameter repositoryService.[0m
+[0m[[0m[31merror[0m] [0m[0m  val TestApplicationController = new ApplicationController([0m
+[0m[[0m[31merror[0m] [0m[0m                                  ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

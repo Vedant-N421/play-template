@@ -15,8 +15,9 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
 
   val TestApplicationController = new ApplicationController(
     component,
-    repository,
-    service
+//    repository,
+    service,
+    repoService
   )
 
   private val dataModel: DataModel =
@@ -90,7 +91,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
 
       val readResult: Future[Result] = TestApplicationController.read(baddy)(FakeRequest())
       assert(status(readResult) == Status.BAD_REQUEST)
-      assert(contentAsJson(readResult).as[JsValue] == Json.toJson("Unable to read book"))
+      assert(contentAsJson(readResult).as[JsValue] == Json.toJson("ERROR: Unable to read book."))
     }
   }
 
@@ -135,7 +136,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
       val readResult: Future[Result] =
         TestApplicationController.readAny("name", baddy)(FakeRequest())
       assert(status(readResult) == Status.BAD_REQUEST)
-      assert(contentAsJson(readResult).as[JsValue] == Json.toJson("Unable to read book"))
+      assert(contentAsJson(readResult).as[JsValue] == Json.toJson("ERROR: Unable to read book."))
     }
   }
 
@@ -150,7 +151,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
       val readResult: Future[Result] =
         TestApplicationController.readAny(baddy, "sjndfnjosfn")(FakeRequest())
       assert(status(readResult) == Status.BAD_REQUEST)
-      assert(contentAsJson(readResult).as[JsValue] == Json.toJson("Unable to read book"))
+      assert(contentAsJson(readResult).as[JsValue] == Json.toJson("ERROR: Unable to read book."))
     }
   }
 
@@ -175,7 +176,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
   }
 
   "ApplicationController .partialUpdate()" should {
-    "partially updates a field of a book in the database by id" in {
+    "partially update a field of a book in the database by id" in {
       beforeEach()
       // First we need to create a book
       val request: FakeRequest[JsValue] =
@@ -222,7 +223,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
           )
         )
       // Check if request was accepted
-      assert(updateResult.header.status == Status.ACCEPTED)
+      assert(updateResult.header.status == Status.BAD_REQUEST)
 
       val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())
       assert(

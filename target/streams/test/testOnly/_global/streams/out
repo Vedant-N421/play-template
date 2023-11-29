@@ -27,7 +27,7 @@
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .update()[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should update a book in the database by id[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .partialUpdate()[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m- should partially updates a field of a book in the database by id[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should partially update a field of a book in the database by id[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .partialUpdate() with a request that does not find a book[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should return a bad request and not change any books in the database[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .partialUpdate() with a good request but bad field change[0m[0m
@@ -39,7 +39,7 @@
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .delete() with a bad request[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should return an error[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 17 events.[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 2 seconds, 525 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 3 seconds, 404 milliseconds.[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 17[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 1, aborted 0[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 17, failed 0, canceled 0, ignored 0, pending 0[0m[0m

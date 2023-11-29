@@ -2,27 +2,51 @@
 [0m[[0m[0mdebug[0m] [0m[0mIncrementalCompile.incrementalCompile[0m
 [0m[[0m[0mdebug[0m] [0m[0mprevious = Stamps for: 6 products, 4 sources, 18 libraries[0m
 [0m[[0m[0mdebug[0m] [0m[0mcurrent source = Set(${BASE}/test/controllers/HomeControllerSpec.scala, ${BASE}/test/controllers/BaseSpec.scala, ${BASE}/test/controllers/LibraryServiceSpec.scala, ${BASE}/test/controllers/ApplicationControllerSpec.scala)[0m
-[0m[[0m[0mdebug[0m] [0m[0m> initialChanges = InitialChanges(Changes(added = Set(), removed = Set(), changed = Set(${BASE}/test/controllers/ApplicationControllerSpec.scala), unmodified = ...),Set(),Set(),API Changes: Set())[0m
+[0m[[0m[0mdebug[0m] [0m[0m> initialChanges = InitialChanges(Changes(added = Set(), removed = Set(), changed = Set(), unmodified = ...),Set(),Set(),API Changes: Set(NamesChange(repositories.DataRepository,ModifiedNames(changes = UsedName(DataRepository,[Default]))), NamesChange(services.RepositoryService,ModifiedNames(changes = UsedName(services;RepositoryService;init;,[Default]), UsedName(dataRepository,[Default]), UsedName(mock,[Default])))))[0m
+[0m[[0m[0mdebug[0m] [0m[0mThe repositories.DataRepository has the following regular definitions changed:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	UsedName(DataRepository,[Default]).[0m
+[0m[[0m[0mdebug[0m] [0m[0mAll member reference dependencies will be considered within this context.[0m
+[0m[[0m[0mdebug[0m] [0m[0mFiles invalidated by inheriting from (external) repositories.DataRepository: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0mNow invalidating by inheritance (internally).[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting direct dependencies of all classes transitively invalidated by inheritance.[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting classes that directly depend on (external) repositories.DataRepository.[0m
+[0m[[0m[0mdebug[0m] [0m[0mThe following modified names cause invalidation of controllers.BaseSpec: [DataRepository][0m
+[0m[[0m[0mdebug[0m] [0m[0mThe following modified names cause invalidation of controllers.ApplicationControllerSpec: [DataRepository][0m
+[0m[[0m[0mdebug[0m] [0m[0mThe following modified names cause invalidation of controllers.BaseSpecWithApplication: [DataRepository][0m
+[0m[[0m[0mdebug[0m] [0m[0mThe services.RepositoryService has the following regular definitions changed:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	UsedName(services;RepositoryService;init;,[Default]), UsedName(dataRepository,[Default]), UsedName(mock,[Default]).[0m
+[0m[[0m[0mdebug[0m] [0m[0mAll member reference dependencies will be considered within this context.[0m
+[0m[[0m[0mdebug[0m] [0m[0mFiles invalidated by inheriting from (external) services.RepositoryService: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0mNow invalidating by inheritance (internally).[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting direct dependencies of all classes transitively invalidated by inheritance.[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting classes that directly depend on (external) services.RepositoryService.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of controllers.BaseSpec. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of controllers.ApplicationControllerSpec. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of controllers.BaseSpecWithApplication. This dependency is not being considered for invalidation.[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mInitial source changes:[0m
 [0m[[0m[0mdebug[0m] [0m[0m	removed: Set()[0m
 [0m[[0m[0mdebug[0m] [0m[0m	added: Set()[0m
-[0m[[0m[0mdebug[0m] [0m[0m	modified: Set(${BASE}/test/controllers/ApplicationControllerSpec.scala)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	modified: Set()[0m
 [0m[[0m[0mdebug[0m] [0m[0mInvalidated products: Set()[0m
-[0m[[0m[0mdebug[0m] [0m[0mExternal API changes: API Changes: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0mExternal API changes: API Changes: Set(NamesChange(repositories.DataRepository,ModifiedNames(changes = UsedName(DataRepository,[Default]))), NamesChange(services.RepositoryService,ModifiedNames(changes = UsedName(services;RepositoryService;init;,[Default]), UsedName(dataRepository,[Default]), UsedName(mock,[Default]))))[0m
 [0m[[0m[0mdebug[0m] [0m[0mModified binary dependencies: Set()[0m
-[0m[[0m[0mdebug[0m] [0m[0mInitial directly invalidated classes: Set(controllers.ApplicationControllerSpec)[0m
+[0m[[0m[0mdebug[0m] [0m[0mInitial directly invalidated classes: Set()[0m
 [0m[[0m[0mdebug[0m] [0m[0mSources indirectly invalidated by:[0m
 [0m[[0m[0mdebug[0m] [0m[0m	product: Set()[0m
 [0m[[0m[0mdebug[0m] [0m[0m	binary dep: Set()[0m
-[0m[[0m[0mdebug[0m] [0m[0m	external source: Set()[0m
-[0m[[0m[0mdebug[0m] [0m[0mAll initially invalidated classes: Set(controllers.ApplicationControllerSpec)[0m
-[0m[[0m[0mdebug[0m] [0m[0mAll initially invalidated sources:Set(${BASE}/test/controllers/ApplicationControllerSpec.scala)[0m
-[0m[[0m[0mdebug[0m] [0m[0mInitial set of included nodes: controllers.ApplicationControllerSpec[0m
+[0m[[0m[0mdebug[0m] [0m[0m	external source: Set(controllers.BaseSpec, controllers.ApplicationControllerSpec, controllers.BaseSpecWithApplication)[0m
+[0m[[0m[0mdebug[0m] [0m[0mAll initially invalidated classes: Set(controllers.BaseSpec, controllers.ApplicationControllerSpec, controllers.BaseSpecWithApplication)[0m
+[0m[[0m[0mdebug[0m] [0m[0mAll initially invalidated sources:Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0mInitial set of included nodes: controllers.BaseSpec, controllers.BaseSpecWithApplication, controllers.ApplicationControllerSpec[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding controllers.HomeControllerSpec by controllers.BaseSpec[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding controllers.LibraryServiceSpec by controllers.BaseSpec[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding controllers.BaseSpecWithApplication by controllers.BaseSpec[0m
+[0m[[0m[0mdebug[0m] [0m[0mIncluding controllers.ApplicationControllerSpec by controllers.BaseSpecWithApplication[0m
 [0m[[0m[0mdebug[0m] [0m[0mcompilation cycle 1[0m
-[0m[[0m[0minfo[0m] [0m[0mcompiling 1 Scala source to /Users/vedant.nemane/Documents/GitHub/play-template/target/scala-2.13/test-classes ...[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 2 Scala sources to /Users/vedant.nemane/Documents/GitHub/play-template/target/scala-2.13/test-classes ...[0m
 [0m[[0m[0mdebug[0m] [0m[0mGetting org.scala-sbt:compiler-bridge_2.13:1.6.0:compile for Scala 2.13.8[0m
-[0m[[0m[0mdebug[0m] [0m[0m[zinc] Running cached compiler 1d27d303 for Scala compiler version 2.13.8[0m
+[0m[[0m[0mdebug[0m] [0m[0m[zinc] Running cached compiler 61310fdf for Scala compiler version 2.13.8[0m
 [0m[[0m[0mdebug[0m] [0m[0m[zinc] The Scala compiler is invoked with:[0m
 [0m[[0m[0mdebug[0m] [0m[0m	-deprecation[0m
 [0m[[0m[0mdebug[0m] [0m[0m	-unchecked[0m
@@ -38,5 +62,5 @@
 [0m[[0m[0mdebug[0m] [0m[0mFinal step, transitive dependencies:[0m
 [0m[[0m[0mdebug[0m] [0m[0m	Set()[0m
 [0m[[0m[0mdebug[0m] [0m[0mNo classes were invalidated.[0m
-[0m[[0m[0mdebug[0m] [0m[0mScala compilation took 0.369336542 s[0m
+[0m[[0m[0mdebug[0m] [0m[0mScala compilation took 0.423802334 s[0m
 [0m[[0m[0mdebug[0m] [0m[0mdone compiling[0m

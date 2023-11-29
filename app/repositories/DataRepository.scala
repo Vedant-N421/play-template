@@ -1,5 +1,6 @@
 package repositories
 
+import com.google.inject.ImplementedBy
 import models.{APIError, DataModel}
 import org.mongodb.scala.bson.conversions.Bson
 import org.mongodb.scala.model.Filters.empty
@@ -9,8 +10,24 @@ import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.PlayMongoRepository
 
 import javax.inject.{Inject, Singleton}
-import scala.concurrent.duration.DurationInt
-import scala.concurrent.{Await, ExecutionContext, Future}
+import scala.concurrent.{ExecutionContext, Future}
+
+@ImplementedBy(classOf[DataRepository])
+trait DataRepoTrait {
+  def index(): Future[Either[APIError, Seq[DataModel]]]
+
+  def create(book: DataModel): Future[Option[DataModel]]
+
+  def read(id: String): Future[Option[DataModel]]
+
+  def readAny[T](field: String, value: T): Future[Option[DataModel]]
+
+  def update(id: String, book: DataModel): Future[result.UpdateResult]
+
+  def partialUpdate[T](id: String, field: String, value: T): Future[Option[DataModel]]
+
+  def delete(id: String): Future[Either[String, result.DeleteResult]]
+}
 
 @Singleton
 class DataRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
@@ -24,7 +41,8 @@ class DataRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: Exe
         )
       ),
       replaceIndexes = false
-    ) {
+    )
+    with DataRepoTrait {
 
   def index(): Future[Either[APIError, Seq[DataModel]]] =
     collection.find().toFuture().map {
@@ -79,33 +97,30 @@ class DataRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: Exe
         replacement = book,
         options = new ReplaceOptions().upsert(
           false
-        ) // What happens when we set this to false? Ans: the code works as intended, doesn't insert a new record.
+        ) // What happens when we set this to false? Ans: update doesn't insert a new record if it can't find it .
       )
       .toFuture()
 
-  def partialUpdate[T](id: String, field: String, value: T): Future[result.UpdateResult] = {
-    read(id)
-      .map {
-        case Some(book) =>
-          val updatedBook = field match {
-            case "id" => book.copy(_id = value.toString)
-            case "name" => book.copy(name = value.toString)
-            case "description" => book.copy(description = value.toString)
-            case "numSales" => book.copy(numSales = value.asInstanceOf[Int])
-            case _ => book
-          }
-          Await.result(update(id, updatedBook), 1.seconds)
-        case None => Await.result(update(id, DataModel("br", "br", "br", 1)), 1.seconds)
-      }
+  def partialUpdate[T](id: String, field: String, value: T): Future[Option[DataModel]] = {
+    collection.find(byID(id)).headOption.flatMap {
+      case Some(book) =>
+        val updatedBook = field match {
+          case "id" => book.copy(_id = value.toString)
+          case "name" => book.copy(name = value.toString)
+          case "description" => book.copy(description = value.toString)
+          case "numSales" => book.copy(numSales = value.asInstanceOf[Int])
+          case _ => book
+        }
+        (update(id, updatedBook)).map(thing => Some(updatedBook))
+      case _ => Future.successful(None)
+    }
   }
 
-  def delete(id: String): Future[Any] = {
+  def delete(id: String): Future[Either[String, result.DeleteResult]] = {
     collection.find(byID(id)).headOption().flatMap {
-      case Some(_) => collection.deleteOne(filter = byID(id)).toFuture()
-      case _ => Future(println("INFO: Book not found, so no deletion with this operation!"))
+      case Some(_) => (collection.deleteOne(filter = byID(id)).toFuture().map(Right(_)))
+      case _ => Future(Left("INFO: Book not found, so no deletion with this operation!"))
     }
-    // Old implementation used Future[Result.DeleteOne] as a return type, containing:
-    // collection.deleteOne(filter = byID(id)).toFuture()
   }
 
   def deleteAll(): Future[Unit] =

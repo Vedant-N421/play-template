@@ -65,11 +65,27 @@ class ApplicationController @Inject() (
     }
   }
 
+//  def getGoogleBook(search: String, term: String): Action[AnyContent] = Action.async {
+//    implicit request =>
+//      println(
+//        s"------------------F1------------------${service.getGoogleBook(search = search, term = term).map(_.toString)}"
+//      )
+//      service.getGoogleBook(search = search, term = term).map {
+//        case response: Volume =>
+//          println(s"------------------F2!------------------${response.toString}")
+//          Ok(Json.toJson(response))
+//        case _ =>
+//          println(s"------------------F3!------------------")
+//      }
+//  }
+
   def getGoogleBook(search: String, term: String): Action[AnyContent] = Action.async {
     implicit request =>
       service.getGoogleBook(search = search, term = term).value.map {
-        case Right(book) => Ok(Json.toJson(book))
-        case Left(error) => Status(error.httpResponseStatus)(error.reason)
+        case Right(book) =>
+          Ok(Json.toJson(book))
+        case Left(error) =>
+          Status(error.httpResponseStatus)(error.reason)
       }
   }
 }

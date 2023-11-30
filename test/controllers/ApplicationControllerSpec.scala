@@ -21,7 +21,13 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
   )
 
   private val dataModel: DataModel =
-    DataModel(_id = "abcd", name = "test name", description = "test description", numSales = 100)
+    DataModel(
+      _id = "abcd",
+      name = "test name",
+      description = "test description",
+      numSales = 100,
+      isbn = "blah"
+    )
   private val baddy: String = "Hello 123"
 
   "ApplicationController .index" should {
@@ -198,7 +204,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
       val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())
       assert(
         contentAsJson(readResult).as[JsValue] == Json.toJson(
-          DataModel("abcd", "replaced", "test description", 100)
+          DataModel("abcd", "replaced", "test description", 100, "blah")
         )
       )
     }
@@ -228,7 +234,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
       val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())
       assert(
         contentAsJson(readResult).as[JsValue] == Json.toJson(
-          DataModel("abcd", "test name", "test description", 100)
+          DataModel("abcd", "test name", "test description", 100, "blah")
         )
       )
 
@@ -260,7 +266,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
       val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())
       assert(
         contentAsJson(readResult).as[JsValue] == Json.toJson(
-          DataModel("abcd", "test name", "test description", 100)
+          DataModel("abcd", "test name", "test description", 100, "blah")
         )
       )
     }

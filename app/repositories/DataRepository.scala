@@ -109,6 +109,7 @@ class DataRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: Exe
           case "name" => book.copy(name = value.toString)
           case "description" => book.copy(description = value.toString)
           case "numSales" => book.copy(numSales = value.asInstanceOf[Int])
+          case "isbn" => book.copy(isbn = value.toString)
           case _ => book
         }
         (update(id, updatedBook)).map(thing => Some(updatedBook))

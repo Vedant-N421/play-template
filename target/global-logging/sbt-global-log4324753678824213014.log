@@ -1,3 +1,9 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(test, Some(b4501e78-913c-4059-a692-19a2cc5ee611), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Test / test[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0mdebug[0m] [0m[0mExporting web-assets:play-template[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 2 Scala sources to /Users/vedant.nemane/Documents/GitHub/play-template/target/scala-2.13/test-classes ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mExporting web-assets-test:play-template[0m
 [0m[[0m[31merror[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/test/controllers/ApplicationControllerSpec.scala:207:61: type mismatch;[0m
 [0m[[0m[31merror[0m] [0m[0m found   : Int(100)[0m
 [0m[[0m[31merror[0m] [0m[0m required: String[0m
@@ -29,3 +35,6 @@
 [0m[[0m[31merror[0m] [0m[0m          DataModel("abcd", "test name", "test description", 100, "blah")[0m
 [0m[[0m[31merror[0m] [0m[0m                                                                  ^[0m
 [0m[[0m[31merror[0m] [0m[0m6 errors found[0m
+[0m[[0m[31merror[0m] [0m[0m(Test / [31mcompileIncremental[0m) Compilation failed[0m
+[0m[[0m[31merror[0m] [0m[0mTotal time: 0 s, completed 29 Nov 2023, 10:51:17[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m

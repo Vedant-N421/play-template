@@ -1,16 +1,4 @@
-[0m[[0m[33mwarn[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/app/repositories/DataRepository.scala:81:42: Auto-application to `()` is deprecated. Supply the empty argument list `()` explicitly to invoke method headOption,[0m
-[0m[[0m[33mwarn[0m] [0m[0mor remove the empty argument list from its definition (Java-defined methods are exempt).[0m
-[0m[[0m[33mwarn[0m] [0m[0mIn Scala 3, an unapplied method like this will be eta-expanded into a function.[0m
-[0m[[0m[33mwarn[0m] [0m[0m    collection.find(byAny(field, value)).headOption.flatMap {[0m
-[0m[[0m[33mwarn[0m] [0m[0m                                         ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/app/repositories/DataRepository.scala:88:31: Auto-application to `()` is deprecated. Supply the empty argument list `()` explicitly to invoke method headOption,[0m
-[0m[[0m[33mwarn[0m] [0m[0mor remove the empty argument list from its definition (Java-defined methods are exempt).[0m
-[0m[[0m[33mwarn[0m] [0m[0mIn Scala 3, an unapplied method like this will be eta-expanded into a function.[0m
-[0m[[0m[33mwarn[0m] [0m[0m    collection.find(byID(id)).headOption.flatMap {[0m
-[0m[[0m[33mwarn[0m] [0m[0m                              ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/app/repositories/DataRepository.scala:105:31: Auto-application to `()` is deprecated. Supply the empty argument list `()` explicitly to invoke method headOption,[0m
-[0m[[0m[33mwarn[0m] [0m[0mor remove the empty argument list from its definition (Java-defined methods are exempt).[0m
-[0m[[0m[33mwarn[0m] [0m[0mIn Scala 3, an unapplied method like this will be eta-expanded into a function.[0m
-[0m[[0m[33mwarn[0m] [0m[0m    collection.find(byID(id)).headOption.flatMap {[0m
-[0m[[0m[33mwarn[0m] [0m[0m                              ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mthree warnings found[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/app/services/LibraryService.scala:17:23: could not find implicit value for parameter rds: play.api.libs.json.OFormat[List[models.Book]] (No Json formatter found for type List[models.Book]. Try to implement an implicit Format for this type.)[0m
+[0m[[0m[31merror[0m] [0m[0m      .get[List[Book]]([0m
+[0m[[0m[31merror[0m] [0m[0m                      ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

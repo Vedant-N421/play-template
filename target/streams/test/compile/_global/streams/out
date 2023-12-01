@@ -1,9 +1,5 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/test/controllers/ApplicationControllerSpec.scala:49:37: overloaded method should with alternatives:[0m
-[0m[[0m[31merror[0m] [0m[0m  (resultOfAfterWordApplication: org.scalatest.verbs.ResultOfAfterWordApplication)(implicit swawr: org.scalatest.verbs.SubjectWithAfterWordRegistration): Unit <and>[0m
-[0m[[0m[31merror[0m] [0m[0m  (right: => Unit)(implicit fun: org.scalatest.verbs.StringVerbBlockRegistration): Unit <and>[0m
-[0m[[0m[31merror[0m] [0m[0m  (right: org.scalatest.verbs.BehaveWord)(implicit svbli: org.scalatest.verbs.StringVerbBehaveLikeInvocation): org.scalatest.verbs.BehaveWord <and>[0m
-[0m[[0m[31merror[0m] [0m[0m  (right: String)(implicit svsi: org.scalatest.verbs.StringVerbStringInvocation): org.scalatest.verbs.ResultOfStringPassedToVerb[0m
-[0m[[0m[31merror[0m] [0m[0m cannot be applied to (org.scalatest.Assertion)[0m
-[0m[[0m[31merror[0m] [0m[0m  "ApplicationController .update()" should {[0m
-[0m[[0m[31merror[0m] [0m[0m                                    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/test/controllers/ApplicationControllerSpec.scala:16:35: not enough arguments for constructor ApplicationController: (controllerComponents: play.api.mvc.ControllerComponents, dataRepository: repositories.DataRepository, service: services.LibraryService, repositoryService: services.RepositoryService)(implicit ec: scala.concurrent.ExecutionContext): controllers.ApplicationController.[0m
+[0m[[0m[31merror[0m] [0m[0mUnspecified value parameter repositoryService.[0m
+[0m[[0m[31merror[0m] [0m[0m  val TestApplicationController = new ApplicationController([0m
+[0m[[0m[31merror[0m] [0m[0m                                  ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m

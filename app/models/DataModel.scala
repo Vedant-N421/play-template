@@ -10,3 +10,4 @@ case class DataModel(_id: String,
 object DataModel {
   implicit val formats: OFormat[DataModel] = Json.format[DataModel]
 }
+

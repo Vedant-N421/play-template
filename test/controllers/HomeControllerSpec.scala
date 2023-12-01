@@ -1,16 +1,16 @@
 package controllers
 
+import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.mvc.ControllerComponents
-import play.api.test.Helpers._
+import play.api.test.Helpers.{status, _}
 import play.api.test._
 
-/**
- * Add your spec here.
- * You can mock out a whole application including requests, plugins etc.
- *
- * For more information, see https://www.playframework.com/documentation/latest/ScalaTestingWithScalaTest
- */
+/** Add your spec here. You can mock out a whole application including requests, plugins etc.
+  *
+  * For more information, see
+  * https://www.playframework.com/documentation/latest/ScalaTestingWithScalaTest
+  */
 class HomeControllerSpec extends BaseSpec with Injecting with GuiceOneAppPerSuite {
 
   val controllerComponents: ControllerComponents = Helpers.stubControllerComponents()
@@ -23,7 +23,7 @@ class HomeControllerSpec extends BaseSpec with Injecting with GuiceOneAppPerSuit
 
       status(home) mustBe OK
       contentType(home) mustBe Some("text/html")
-      contentAsString(home) must include ("Welcome to Play")
+      contentAsString(home) must include("Welcome to Play")
     }
 
     "render the index page from the application" in {
@@ -32,7 +32,7 @@ class HomeControllerSpec extends BaseSpec with Injecting with GuiceOneAppPerSuit
 
       status(home) mustBe OK
       contentType(home) mustBe Some("text/html")
-      contentAsString(home) must include ("Welcome to Play")
+      contentAsString(home) must include("Welcome to Play")
     }
 
     "render the index page from the router" in {
@@ -41,7 +41,7 @@ class HomeControllerSpec extends BaseSpec with Injecting with GuiceOneAppPerSuit
 
       status(home) mustBe OK
       contentType(home) mustBe Some("text/html")
-      contentAsString(home) must include ("Welcome to Play")
+      contentAsString(home) must include("Welcome to Play")
     }
   }
 }

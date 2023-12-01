@@ -15,8 +15,3 @@ object Book {
 object VolumeInfo {
   implicit val formats: OFormat[VolumeInfo] = Json.format[VolumeInfo]
 }
-
-//object BookList {
-//  implicit val formats: OFormat[BookList] = Json.format[BookList]
-//  implicit val formats: List[OFormat[Book]] = List(Json.format[Book])
-//}

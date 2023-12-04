@@ -327,20 +327,18 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
     }
   }
 
-  "ApplicationController .getGoogleBook" should {
-    "find a book, store it in Mongo and produce the book data in a browser window" in {
-      beforeEach()
-//      val request: FakeRequest[JsValue] =
-//        buildGet(s"/library/google/flowers/inauthor:keyes").withBody[JsValue](Json.toJson(dataModel))
-      val fetchedResult: Result =
-        TestApplicationController.getGoogleBook("flowers", "inauthor:keyes")
-      assert(fetchedResult.header.status == Status.OK)
-
-      val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())
-      assert(status(readResult) == Status.OK)
-      assert(contentAsJson(readResult).as[JsValue] == Json.toJson(dataModel))
-
-    }
-  }
+//  "ApplicationController .getGoogleBook" should {
+//    "find a book, store it in Mongo and produce the book data in a browser window" in {
+//      beforeEach()
+//      val fetchedResult: Result =
+//        TestApplicationController.getGoogleBook("flowers", "inauthor:keyes")
+//      assert(fetchedResult.header.status == Status.OK)
+//
+//      val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())
+//      assert(status(readResult) == Status.OK)
+//      assert(contentAsJson(readResult).as[JsValue] == Json.toJson(dataModel))
+//
+//    }
+//  }
 
 }

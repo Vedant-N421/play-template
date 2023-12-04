@@ -23,9 +23,9 @@ class ApplicationController @Inject() (
   }
 
   def update(id: String): Action[JsValue] = Action.async(parse.json) { implicit request =>
-    repositoryService.update(id, request) match {
-      case Right(book) => Future(Accepted(Json.toJson(book)))
-      case Left(error) => Future(BadRequest(Json.toJson(error)))
+    repositoryService.update(id, request).map {
+      case Right(book) => Accepted(Json.toJson(book))
+      case Left(error) => BadRequest(Json.toJson(error))
     }
   }
 

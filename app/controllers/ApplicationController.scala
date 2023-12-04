@@ -3,6 +3,7 @@ package controllers
 import models.{APIError, DataModel}
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
+import play.api.test.FakeRequest
 import services.{LibraryService, RepositoryService}
 
 import javax.inject.Inject
@@ -65,24 +66,28 @@ class ApplicationController @Inject() (
     }
   }
 
-//  def getGoogleBook(search: String, term: String): Action[AnyContent] = Action.async {
-//    implicit request =>
-//      println(
-//        s"------------------F1------------------${service.getGoogleBook(search = search, term = term).map(_.toString)}"
-//      )
-//      service.getGoogleBook(search = search, term = term).map {
-//        case response: Volume =>
-//          println(s"------------------F2!------------------${response.toString}")
-//          Ok(Json.toJson(response))
-//        case _ =>
-//          println(s"------------------F3!------------------")
-//      }
-//  }
-
   def getGoogleBook(search: String, term: String): Action[AnyContent] = Action.async {
     implicit request =>
       service.getGoogleBook(search = search, term = term).value.map {
-        case Right(book) => Ok(Json.toJson(book))
+        case Right(books) =>
+          //          Get a List(Book) and convert to List(DataModels), and iterate through and create entries for them in Mongo
+          val dataModelList: List[DataModel] = books.map(book =>
+            DataModel(
+              _id = book.id,
+              name = book.volumeInfo.title,
+              description = book.volumeInfo.description.getOrElse("Empty description."),
+              numSales = 1,
+              isbn = book.volumeInfo.industryIdentifiers.head.identifier
+            )
+          )
+
+          dataModelList.flatMap(datamodel => {
+            val request: FakeRequest[JsValue] =
+              buildPost("/create").withBody[JsValue](Json.toJson(dataModel))
+            repositoryService.create()
+
+          })
+
         case Left(error) => Status(error.httpResponseStatus)(error.reason)
       }
   }

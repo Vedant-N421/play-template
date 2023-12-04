@@ -1,0 +1,52 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(testOnly *ApplicationControllerSpec, Some(85ba53e1-742f-411d-8498-c3831de727b8), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Test / testOnly[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0mdebug[0m] [0m[0mExporting web-assets:play-template[0m
+[0m[[0m[0mdebug[0m] [0m[0mExporting web-assets-test:play-template[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 5 Scala sources to /Users/vedant.nemane/Documents/GitHub/play-template/target/scala-2.13/test-classes ...[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mApplicationControllerSpec:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31mcontrollers.ApplicationControllerSpec *** ABORTED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  com.google.inject.ProvisionException: Unable to provision, see the following errors:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m1) Error injecting constructor, java.util.concurrent.TimeoutException: Future timed out after [5 seconds][0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at repositories.DataRepository.<init>(DataRepository.scala:33)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at repositories.DataRepository.class(DataRepository.scala:33)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  while locating repositories.DataRepository[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  while locating repositories.DataRepoTrait[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m    for the 1st parameter of services.RepositoryService.<init>(RepositoryService.scala:13)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  while locating services.RepositoryService[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m1 error[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at com.google.inject.internal.InternalProvisionException.toProvisionException(InternalProvisionException.java:226)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at com.google.inject.internal.InjectorImpl$1.get(InjectorImpl.java:1097)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at com.google.inject.internal.InjectorImpl.getInstance(InjectorImpl.java:1131)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at play.api.inject.guice.GuiceInjector.instanceOf(GuiceInjectorBuilder.scala:436)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at play.api.inject.guice.GuiceInjector.instanceOf(GuiceInjectorBuilder.scala:431)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at play.api.inject.ContextClassLoaderInjector.$anonfun$instanceOf$2(Injector.scala:119)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at play.api.inject.ContextClassLoaderInjector.withContext(Injector.scala:128)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at play.api.inject.ContextClassLoaderInjector.instanceOf(Injector.scala:119)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at controllers.BaseSpecWithApplication.repoService(BaseSpec.scala:41)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at controllers.BaseSpecWithApplication.repoService$(BaseSpec.scala:41)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  Cause: java.util.concurrent.TimeoutException: Future timed out after [5 seconds][0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.concurrent.impl.Promise$DefaultPromise.tryAwait0(Promise.scala:248)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.concurrent.impl.Promise$DefaultPromise.result(Promise.scala:261)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.concurrent.Await$.$anonfun$result$1(package.scala:201)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.concurrent.BlockContext$DefaultBlockContext$.blockOn(BlockContext.scala:62)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.concurrent.Await$.result(package.scala:124)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at uk.gov.hmrc.mongo.play.json.PlayMongoRepository.<init>(PlayMongoRepository.scala:56)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at repositories.DataRepository.<init>(DataRepository.scala:34)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at repositories.DataRepository$$FastClassByGuice$$b3be7ffa.newInstance(<generated>)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at com.google.inject.internal.DefaultConstructionProxyFactory$FastClassProxy.newInstance(DefaultConstructionProxyFactory.java:89)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at com.google.inject.internal.ConstructorInjector.provision(ConstructorInjector.java:114)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 6 seconds, 965 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 0, aborted 1[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 0, failed 0, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m*** 1 SUITE ABORTED ***[0m[0m
+[0m[[0m[31merror[0m] [0m[0mError during tests:[0m
+[0m[[0m[31merror[0m] [0m[0m	controllers.ApplicationControllerSpec[0m
+[0m[[0m[31merror[0m] [0m[0m(Test / [31mtestOnly[0m) sbt.TestsFailedException: Tests unsuccessful[0m
+[0m[[0m[31merror[0m] [0m[0mTotal time: 8 s, completed 1 Dec 2023, 16:44:52[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m

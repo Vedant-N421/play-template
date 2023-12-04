@@ -24,12 +24,12 @@ class RepositoryService @Inject() (
     }
   }
 
-  def update(id: String, request: Request[JsValue]): Either[String, DataModel] = {
+  def update(id: String, request: Request[JsValue]): Future[Either[String, DataModel]] = {
     request.body.validate[DataModel] match {
       case JsSuccess(book: DataModel, _) =>
         dataRepoTrait.update(id, book)
-        Right(book)
-      case JsError(_) => Left("ERROR: Item not updated.")
+        Future(Right(book))
+      case JsError(_) => Future(Left("ERROR: Item not updated."))
     }
   }
 

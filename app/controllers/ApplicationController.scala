@@ -23,9 +23,9 @@ class ApplicationController @Inject() (
   }
 
   def update(id: String): Action[JsValue] = Action.async(parse.json) { implicit request =>
-    repositoryService.update(id, request) match {
-      case Right(book) => Future(Accepted(Json.toJson(book)))
-      case Left(error) => Future(BadRequest(Json.toJson(error)))
+    repositoryService.update(id, request).map {
+      case Right(book) => Accepted(Json.toJson(book))
+      case Left(error) => BadRequest(Json.toJson(error))
     }
   }
 
@@ -64,6 +64,20 @@ class ApplicationController @Inject() (
       case Left(error) => BadRequest(Json.toJson(error))
     }
   }
+
+//  def getGoogleBook(search: String, term: String): Action[AnyContent] = Action.async {
+//    implicit request =>
+//      println(
+//        s"------------------F1------------------${service.getGoogleBook(search = search, term = term).map(_.toString)}"
+//      )
+//      service.getGoogleBook(search = search, term = term).map {
+//        case response: Volume =>
+//          println(s"------------------F2!------------------${response.toString}")
+//          Ok(Json.toJson(response))
+//        case _ =>
+//          println(s"------------------F3!------------------")
+//      }
+//  }
 
   def getGoogleBook(search: String, term: String): Action[AnyContent] = Action.async {
     implicit request =>

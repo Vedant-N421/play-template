@@ -2,17 +2,16 @@ package models
 
 import play.api.libs.json.{Json, OFormat}
 
-case class Book(_id: String, name: String, description: String, numSales: Int) {
-//  def apply(body: JsValue): Unit = {
-//    val book_ids: collection.Seq[JsValue] = body \\ "id"
-//    print(book_ids)
-//  }
+case class Book(kind: String, id: String, etag: String, selfLink: String, volumeInfo: VolumeInfo)
 
-//  def apply(body: JsValue): Unit = {
-//    print(body)
-//  }
-}
+case class VolumeInfo(title: String, subtitle: String, authors: List[String], description: String)
+
+case class BookList(items: Seq[Book])
 
 object Book {
   implicit val formats: OFormat[Book] = Json.format[Book]
+}
+
+object VolumeInfo {
+  implicit val formats: OFormat[VolumeInfo] = Json.format[VolumeInfo]
 }

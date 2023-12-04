@@ -1,5 +1,13 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/test/controllers/ApplicationControllerSpec.scala:16:35: not enough arguments for constructor ApplicationController: (controllerComponents: play.api.mvc.ControllerComponents, dataRepository: repositories.DataRepository, service: services.LibraryService, repositoryService: services.RepositoryService)(implicit ec: scala.concurrent.ExecutionContext): controllers.ApplicationController.[0m
-[0m[[0m[31merror[0m] [0m[0mUnspecified value parameter repositoryService.[0m
-[0m[[0m[31merror[0m] [0m[0m  val TestApplicationController = new ApplicationController([0m
-[0m[[0m[31merror[0m] [0m[0m                                  ^[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/test/controllers/RepositoryServiceSpec.scala:106:19: pattern type is incompatible with expected type;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : String[0m
+[0m[[0m[31merror[0m] [0m[0m required: scala.util.Either[String,models.DataModel][0m
+[0m[[0m[31merror[0m] [0m[0m        case err: String => assert(err == "ERROR: Item not updated.")[0m
+[0m[[0m[31merror[0m] [0m[0m                  ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/test/controllers/RepositoryServiceSpec.scala:107:56: No Json serializer found for type scala.util.Either[String,models.DataModel] with models.DataModel. Try to implement an implicit Writes or Format for this type.[0m
+[0m[[0m[31merror[0m] [0m[0m        case dataModel: DataModel => assert(Json.toJson(dataModel) == book1)[0m
+[0m[[0m[31merror[0m] [0m[0m                                                       ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/Users/vedant.nemane/Documents/GitHub/play-template/test/controllers/RepositoryServiceSpec.scala:107:25: fruitless type test: a value of type scala.util.Either[String,models.DataModel] cannot also be a models.DataModel[0m
+[0m[[0m[33mwarn[0m] [0m[0m        case dataModel: DataModel => assert(Json.toJson(dataModel) == book1)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                        ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m

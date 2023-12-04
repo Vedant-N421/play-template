@@ -4,7 +4,7 @@ import models.DataModel
 import org.scalatest.{BeforeAndAfter, BeforeAndAfterEach}
 import play.api.http.Status
 import play.api.libs.json.{JsSuccess, JsValue, Json}
-import play.api.mvc.Result
+import play.api.mvc.{Action, AnyContent, Result}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
@@ -21,7 +21,13 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
   )
 
   private val dataModel: DataModel =
-    DataModel(_id = "abcd", name = "test name", description = "test description", numSales = 100)
+    DataModel(
+      _id = "abcd",
+      name = "test name",
+      description = "test description",
+      numSales = 100,
+      isbn = "blah"
+    )
   private val baddy: String = "Hello 123"
 
   "ApplicationController .index" should {
@@ -198,7 +204,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
       val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())
       assert(
         contentAsJson(readResult).as[JsValue] == Json.toJson(
-          DataModel("abcd", "replaced", "test description", 100)
+          DataModel("abcd", "replaced", "test description", 100, "blah")
         )
       )
     }
@@ -228,7 +234,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
       val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())
       assert(
         contentAsJson(readResult).as[JsValue] == Json.toJson(
-          DataModel("abcd", "test name", "test description", 100)
+          DataModel("abcd", "test name", "test description", 100, "blah")
         )
       )
 
@@ -260,7 +266,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
       val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())
       assert(
         contentAsJson(readResult).as[JsValue] == Json.toJson(
-          DataModel("abcd", "test name", "test description", 100)
+          DataModel("abcd", "test name", "test description", 100, "blah")
         )
       )
     }
@@ -320,4 +326,19 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
       assert(deleteResult.header.status == Status.BAD_REQUEST)
     }
   }
+
+//  "ApplicationController .getGoogleBook" should {
+//    "find a book, store it in Mongo and produce the book data in a browser window" in {
+//      beforeEach()
+//      val fetchedResult: Result =
+//        TestApplicationController.getGoogleBook("flowers", "inauthor:keyes")
+//      assert(fetchedResult.header.status == Status.OK)
+//
+//      val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())
+//      assert(status(readResult) == Status.OK)
+//      assert(contentAsJson(readResult).as[JsValue] == Json.toJson(dataModel))
+//
+//    }
+//  }
+
 }

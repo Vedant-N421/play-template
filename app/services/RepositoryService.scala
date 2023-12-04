@@ -13,6 +13,13 @@ class RepositoryService @Inject() (
     val dataRepoTrait: DataRepoTrait
 )(implicit executionContext: ExecutionContext) {
 
+  def createGoogleBook(book: DataModel): Future[Either[String, DataModel]] = {
+    dataRepoTrait.create(book).map {
+      case None => Left("ERROR: Duplicate found, item not created.")
+      case _ => Right(book)
+    }
+  }
+
   def create(request: Request[JsValue]): Future[Either[String, DataModel]] = {
     request.body.validate[DataModel] match {
       case JsSuccess(book, _) =>

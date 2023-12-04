@@ -87,6 +87,16 @@ package controllers.javascript {
       """
     )
   
+    // @LINE:17
+    def example: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.ApplicationController.example",
+      """
+        function() {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "example"})
+        }
+      """
+    )
+  
     // @LINE:13
     def delete: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ApplicationController.delete",

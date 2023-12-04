@@ -50,6 +50,7 @@ class Routes(
     ("""PUT""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """update/""" + "$" + """id<[^/]+>""", """controllers.ApplicationController.update(id:String)"""),
     ("""DELETE""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """delete/""" + "$" + """id<[^/]+>""", """controllers.ApplicationController.delete(id:String)"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """library/google/""" + "$" + """search<[^/]+>/""" + "$" + """term<[^/]+>""", """controllers.ApplicationController.getGoogleBook(search:String, term:String)"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """example""", """controllers.ApplicationController.example()"""),
     Nil
   ).foldLeft(List.empty[(String,String,String)]) { (s,e) => e.asInstanceOf[Any] match {
     case r @ (_,_,_) => s :+ r.asInstanceOf[(String,String,String)]
@@ -201,6 +202,24 @@ class Routes(
     )
   )
 
+  // @LINE:17
+  private[this] lazy val controllers_ApplicationController_example8_route = Route("GET",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("example")))
+  )
+  private[this] lazy val controllers_ApplicationController_example8_invoker = createInvoker(
+    ApplicationController_2.example(),
+    play.api.routing.HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.ApplicationController",
+      "example",
+      Nil,
+      "GET",
+      this.prefix + """example""",
+      """""",
+      Seq()
+    )
+  )
+
 
   def routes: PartialFunction[RequestHeader, Handler] = {
   
@@ -250,6 +269,12 @@ class Routes(
     case controllers_ApplicationController_getGoogleBook7_route(params@_) =>
       call(params.fromPath[String]("search", None), params.fromPath[String]("term", None)) { (search, term) =>
         controllers_ApplicationController_getGoogleBook7_invoker.call(ApplicationController_2.getGoogleBook(search, term))
+      }
+  
+    // @LINE:17
+    case controllers_ApplicationController_example8_route(params@_) =>
+      call { 
+        controllers_ApplicationController_example8_invoker.call(ApplicationController_2.example())
       }
   }
 }

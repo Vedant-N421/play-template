@@ -3,7 +3,6 @@ package controllers
 import models.{APIError, DataModel}
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
-import play.api.test.FakeRequest
 import services.{LibraryService, RepositoryService}
 
 import javax.inject.Inject
@@ -21,6 +20,10 @@ class ApplicationController @Inject() (
       case Right(book) => Created(Json.toJson(book))
       case Left(error) => BadRequest(Json.toJson(error))
     }
+  }
+
+  def example(): Action[AnyContent] = Action.async { implicit request =>
+    Future.successful(Ok(views.html.example()))
   }
 
   def update(id: String): Action[JsValue] = Action.async(parse.json) { implicit request =>
@@ -70,7 +73,7 @@ class ApplicationController @Inject() (
     implicit request =>
       service.getGoogleBook(search = search, term = term).value.map {
         case Right(books) =>
-          //          Get a List(Book) and convert to List(DataModels), and iterate through and create entries for them in Mongo
+          // Get a List(Book) and convert to List(DataModels), and iterate through and create entries for them in Mongo
           val dataModelList: List[DataModel] = books.map(book =>
             DataModel(
               _id = book.id,
@@ -80,13 +83,8 @@ class ApplicationController @Inject() (
               isbn = book.volumeInfo.industryIdentifiers.head.identifier
             )
           )
-
-          dataModelList.flatMap(datamodel => {
-            val request: FakeRequest[JsValue] =
-              buildPost("/create").withBody[JsValue](Json.toJson(dataModel))
-            repositoryService.create()
-
-          })
+          dataModelList.map(dataModel => repositoryService.createGoogleBook(dataModel))
+          Created
 
         case Left(error) => Status(error.httpResponseStatus)(error.reason)
       }

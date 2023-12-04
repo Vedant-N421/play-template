@@ -64,6 +64,12 @@ package controllers {
       Call("GET", _prefix + { _defaultPrefix } + "library/google/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("search", search)) + "/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("term", term)))
     }
   
+    // @LINE:17
+    def example(): Call = {
+      
+      Call("GET", _prefix + { _defaultPrefix } + "example")
+    }
+  
     // @LINE:13
     def delete(id:String): Call = {
       

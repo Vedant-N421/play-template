@@ -22,8 +22,12 @@ class ApplicationController @Inject() (
     }
   }
 
-  def example(): Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(views.html.example()))
+  def example(id: String): Action[AnyContent] = Action.async { implicit request =>
+    repositoryService.read(id).map {
+      case Right(book: DataModel) => Ok(views.html.example(book))
+      case Left(err: String) =>
+        BadRequest(views.html.example(DataModel("404", "404", "404", 404, "404")))
+    }
   }
 
   def update(id: String): Action[JsValue] = Action.async(parse.json) { implicit request =>

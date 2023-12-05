@@ -1,10 +1,10 @@
-
 ThisBuild / version := "0.1.0-SNAPSHOT"
 
 ThisBuild / scalaVersion := "2.13.8"
 
 resolvers += "HMRC-open-artefacts-maven2" at "https://open.artefacts.tax.service.gov.uk/maven2"
 
+routesImport += "models.DataModel"
 //libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.5" % "test"
 
 libraryDependencies ++= Seq(
@@ -25,6 +25,5 @@ parallelExecution in Test := false
 lazy val root = (project in file("."))
   .settings(
     name := "play-template"
-
   )
   .enablePlugins(PlayScala)

@@ -1,3 +1,5 @@
+
+
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index()
 
@@ -14,4 +16,4 @@ DELETE     /delete/:id    controllers.ApplicationController.delete(id: String)
 
 GET     /library/google/:search/:term      controllers.ApplicationController.getGoogleBook(search: String, term: String)
 
-GET     /example                           controllers.ApplicationController.example()
+GET     /example/:id                          controllers.ApplicationController.example(id: String)

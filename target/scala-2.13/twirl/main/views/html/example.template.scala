@@ -25,7 +25,7 @@ object example extends _root_.play.twirl.api.BaseScalaTemplate[play.twirl.api.Ht
 
 Seq[Any](_display_(/*2.2*/main("Find Book")/*2.19*/{_display_(Seq[Any](format.raw/*2.20*/("""
     """),format.raw/*3.5*/("""<h1>Google Book API Project</h1>
-  <b>"""),_display_(/*4.7*/dataModel/*4.16*/._id),format.raw/*4.20*/(""", """),_display_(/*4.23*/dataModel/*4.32*/.name),format.raw/*4.37*/(""", """),_display_(/*4.40*/dataModel/*4.49*/.description),format.raw/*4.61*/(""", """),_display_(/*4.64*/dataModel/*4.73*/.isbn),format.raw/*4.78*/("""</b>
+  <b>Book ID: """),_display_(/*4.16*/dataModel/*4.25*/._id),format.raw/*4.29*/(""" """),format.raw/*4.30*/("""<br><br>Book name: """),_display_(/*4.50*/dataModel/*4.59*/.name),format.raw/*4.64*/(""" """),format.raw/*4.65*/("""<br><br>Book description: """),_display_(/*4.92*/dataModel/*4.101*/.description),format.raw/*4.113*/(""" """),format.raw/*4.114*/("""<br><br>Book ISBN: """),_display_(/*4.134*/dataModel/*4.143*/.isbn),format.raw/*4.148*/(""" """),format.raw/*4.149*/("""<br><br></b>
 """)))}))
       }
     }
@@ -43,9 +43,9 @@ Seq[Any](_display_(/*2.2*/main("Find Book")/*2.19*/{_display_(Seq[Any](format.ra
               /*
                   -- GENERATED --
                   SOURCE: app/views/example.scala.html
-                  HASH: fb356bddac13bd15904d84f05a37fd13b0696aa8
-                  MATRIX: 734->1|850->25|875->42|913->43|944->48|1008->87|1025->96|1049->100|1078->103|1095->112|1120->117|1149->120|1166->129|1198->141|1227->144|1244->153|1269->158
-                  LINES: 21->1|26->2|26->2|26->2|27->3|28->4|28->4|28->4|28->4|28->4|28->4|28->4|28->4|28->4|28->4|28->4|28->4
+                  HASH: 4793b39a094c577ca43d71b3358ce5347a73c27a
+                  MATRIX: 734->1|850->25|875->42|913->43|944->48|1018->96|1035->105|1059->109|1087->110|1133->130|1150->139|1175->144|1203->145|1256->172|1274->181|1307->193|1336->194|1383->214|1401->223|1427->228|1456->229
+                  LINES: 21->1|26->2|26->2|26->2|27->3|28->4|28->4|28->4|28->4|28->4|28->4|28->4|28->4|28->4|28->4|28->4|28->4|28->4|28->4|28->4|28->4
                   -- GENERATED --
               */
           

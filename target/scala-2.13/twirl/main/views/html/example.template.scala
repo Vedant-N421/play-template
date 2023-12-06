@@ -24,8 +24,11 @@ object example extends _root_.play.twirl.api.BaseScalaTemplate[play.twirl.api.Ht
 
 
 Seq[Any](_display_(/*2.2*/main("Find Book")/*2.19*/{_display_(Seq[Any](format.raw/*2.20*/("""
-    """),format.raw/*3.5*/("""<h1>Google Book API Project</h1>
-  <b>Book ID: """),_display_(/*4.16*/dataModel/*4.25*/._id),format.raw/*4.29*/(""" """),format.raw/*4.30*/("""<br><br>Book name: """),_display_(/*4.50*/dataModel/*4.59*/.name),format.raw/*4.64*/(""" """),format.raw/*4.65*/("""<br><br>Book description: """),_display_(/*4.92*/dataModel/*4.101*/.description),format.raw/*4.113*/(""" """),format.raw/*4.114*/("""<br><br>Book ISBN: """),_display_(/*4.134*/dataModel/*4.143*/.isbn),format.raw/*4.148*/(""" """),format.raw/*4.149*/("""<br><br></b>
+
+
+
+    """),format.raw/*6.5*/("""<h1>Google Book API Project</h1>
+  <b>Book ID: """),_display_(/*7.16*/dataModel/*7.25*/._id),format.raw/*7.29*/(""" """),format.raw/*7.30*/("""<br><br>Book name: """),_display_(/*7.50*/dataModel/*7.59*/.name),format.raw/*7.64*/(""" """),format.raw/*7.65*/("""<br><br>Book description: """),_display_(/*7.92*/dataModel/*7.101*/.description),format.raw/*7.113*/(""" """),format.raw/*7.114*/("""<br><br>Book ISBN: """),_display_(/*7.134*/dataModel/*7.143*/.isbn),format.raw/*7.148*/(""" """),format.raw/*7.149*/("""<br><br></b>
 """)))}))
       }
     }
@@ -43,9 +46,9 @@ Seq[Any](_display_(/*2.2*/main("Find Book")/*2.19*/{_display_(Seq[Any](format.ra
               /*
                   -- GENERATED --
                   SOURCE: app/views/example.scala.html
-                  HASH: 4793b39a094c577ca43d71b3358ce5347a73c27a
-                  MATRIX: 734->1|850->25|875->42|913->43|944->48|1018->96|1035->105|1059->109|1087->110|1133->130|1150->139|1175->144|1203->145|1256->172|1274->181|1307->193|1336->194|1383->214|1401->223|1427->228|1456->229
-                  LINES: 21->1|26->2|26->2|26->2|27->3|28->4|28->4|28->4|28->4|28->4|28->4|28->4|28->4|28->4|28->4|28->4|28->4|28->4|28->4|28->4|28->4
+                  HASH: 4caec9428629088b5f9cd9cb40013852eac907e4
+                  MATRIX: 734->1|850->25|875->42|913->43|947->51|1021->99|1038->108|1062->112|1090->113|1136->133|1153->142|1178->147|1206->148|1259->175|1277->184|1310->196|1339->197|1386->217|1404->226|1430->231|1459->232
+                  LINES: 21->1|26->2|26->2|26->2|30->6|31->7|31->7|31->7|31->7|31->7|31->7|31->7|31->7|31->7|31->7|31->7|31->7|31->7|31->7|31->7|31->7
                   -- GENERATED --
               */
           

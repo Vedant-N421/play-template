@@ -64,6 +64,18 @@ package controllers {
       Call("GET", _prefix + { _defaultPrefix } + "library/google/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("search", search)) + "/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("term", term)))
     }
   
+    // @LINE:22
+    def addNewBookForm(): Call = {
+      
+      Call("POST", _prefix + { _defaultPrefix } + "addbook/form")
+    }
+  
+    // @LINE:21
+    def addNewBook(): Call = {
+      
+      Call("GET", _prefix + { _defaultPrefix } + "addbook/form")
+    }
+  
     // @LINE:15
     def delete(id:String): Call = {
       

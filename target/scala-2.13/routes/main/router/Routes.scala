@@ -51,6 +51,8 @@ class Routes(
     ("""DELETE""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """delete/""" + "$" + """id<[^/]+>""", """controllers.ApplicationController.delete(id:String)"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """library/google/""" + "$" + """search<[^/]+>/""" + "$" + """term<[^/]+>""", """controllers.ApplicationController.getGoogleBook(search:String, term:String)"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """example/""" + "$" + """id<[^/]+>""", """controllers.ApplicationController.example(id:String)"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """addbook/form""", """controllers.ApplicationController.addNewBook()"""),
+    ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """addbook/form""", """controllers.ApplicationController.addNewBookForm()"""),
     Nil
   ).foldLeft(List.empty[(String,String,String)]) { (s,e) => e.asInstanceOf[Any] match {
     case r @ (_,_,_) => s :+ r.asInstanceOf[(String,String,String)]
@@ -220,6 +222,42 @@ class Routes(
     )
   )
 
+  // @LINE:21
+  private[this] lazy val controllers_ApplicationController_addNewBook9_route = Route("GET",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("addbook/form")))
+  )
+  private[this] lazy val controllers_ApplicationController_addNewBook9_invoker = createInvoker(
+    ApplicationController_2.addNewBook(),
+    play.api.routing.HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.ApplicationController",
+      "addNewBook",
+      Nil,
+      "GET",
+      this.prefix + """addbook/form""",
+      """""",
+      Seq()
+    )
+  )
+
+  // @LINE:22
+  private[this] lazy val controllers_ApplicationController_addNewBookForm10_route = Route("POST",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("addbook/form")))
+  )
+  private[this] lazy val controllers_ApplicationController_addNewBookForm10_invoker = createInvoker(
+    ApplicationController_2.addNewBookForm(),
+    play.api.routing.HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.ApplicationController",
+      "addNewBookForm",
+      Nil,
+      "POST",
+      this.prefix + """addbook/form""",
+      """""",
+      Seq()
+    )
+  )
+
 
   def routes: PartialFunction[RequestHeader, Handler] = {
   
@@ -275,6 +313,18 @@ class Routes(
     case controllers_ApplicationController_example8_route(params@_) =>
       call(params.fromPath[String]("id", None)) { (id) =>
         controllers_ApplicationController_example8_invoker.call(ApplicationController_2.example(id))
+      }
+  
+    // @LINE:21
+    case controllers_ApplicationController_addNewBook9_route(params@_) =>
+      call { 
+        controllers_ApplicationController_addNewBook9_invoker.call(ApplicationController_2.addNewBook())
+      }
+  
+    // @LINE:22
+    case controllers_ApplicationController_addNewBookForm10_route(params@_) =>
+      call { 
+        controllers_ApplicationController_addNewBookForm10_invoker.call(ApplicationController_2.addNewBookForm())
       }
   }
 }

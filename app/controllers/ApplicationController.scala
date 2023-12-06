@@ -1,8 +1,10 @@
 package controllers
 
+import models.DataModel.dataForm
 import models.{APIError, DataModel}
 import play.api.libs.json.{JsValue, Json}
-import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
+import play.api.mvc._
+import play.filters.csrf.CSRF
 import services.{LibraryService, RepositoryService}
 
 import javax.inject.Inject
@@ -13,7 +15,8 @@ class ApplicationController @Inject() (
     val service: LibraryService,
     val repositoryService: RepositoryService
 )(implicit val ec: ExecutionContext)
-    extends BaseController {
+    extends BaseController
+    with play.api.i18n.I18nSupport {
 
   def create(): Action[JsValue] = Action.async(parse.json) { implicit request =>
     repositoryService.create(request).map {
@@ -77,7 +80,6 @@ class ApplicationController @Inject() (
     implicit request =>
       service.getGoogleBook(search = search, term = term).value.map {
         case Right(books) =>
-          // Get a List(Book) and convert to List(DataModels), and iterate through and create entries for them in Mongo
           val dataModelList: List[DataModel] = books.map(book =>
             DataModel(
               _id = book.id,
@@ -92,5 +94,32 @@ class ApplicationController @Inject() (
 
         case Left(error) => Status(error.httpResponseStatus)(error.reason)
       }
+  }
+
+  private def accessToken(implicit request: Request[_]) = {
+    CSRF.getToken
+  }
+
+  def addNewBook(): Action[AnyContent] = Action { implicit request =>
+    Ok(views.html.addnewbook(dataForm = DataModel.dataForm))
+  }
+
+  def addNewBookForm(): Action[AnyContent] = Action.async { implicit request =>
+    accessToken // call the accessToken method
+    dataForm
+      .bindFromRequest()
+      .fold( // from the implicit request we want to bind this to the form in our companion object
+        formWithErrors => {
+          // here write what you want to do if the form has errors
+          Future(BadRequest("ERROR: Form had errors"))
+        },
+        formData => {
+          // here write how you would use this data to create a new book (DataModel)
+          repositoryService.createGoogleBook(formData).map {
+            case Right(book: DataModel) => Created(Json.toJson(book))
+            case Left(err: String) => BadRequest(err)
+          }
+        }
+      )
   }
 }

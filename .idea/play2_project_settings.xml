@@ -35,7 +35,6 @@
               <option name="routesImports">
                 <list>
                   <option value="controllers.Assets.Asset" />
-                  <option value="models.DataModel" />
                 </list>
               </option>
               <option name="uri" value="$PROJECT_DIR$" />

@@ -1,0 +1,3 @@
+[0m[[0m[31merror[0m] [0m[0m[Error] /Users/vedant.nemane/Documents/GitHub/play-template/app/views/add.new.book.scala.html:1[0m
+[0m[[0m[31merror[0m] [0m[0m@import models.Person: Invalid template name [add.new.book.scala.html], filenames must only consist of alphanumeric characters and underscores or periods.[0m
+[0m[[0m[31merror[0m] [0m[0m(Compile / [31mtwirlCompileTemplates[0m) Twirl compilation failed[0m

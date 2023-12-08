@@ -34,11 +34,11 @@ class LibraryServiceSpec
       (mockConnector
         .get[Book](_: String)(_: OFormat[Book], _: ExecutionContext))
         .expects(url, *, *)
-        .returning(EitherT.rightT(gameOfThrones.as[Book]))
+        .returning(EitherT.rightT(List(gameOfThrones.as[Book])))
         .once()
       whenReady(testService.getGoogleBook(urlOverride = Some(url), search = "", term = "").value) {
         result =>
-          assert(result == Right(gameOfThrones.as[Book]))
+          assert(result == Right(List(gameOfThrones.as[Book])))
       }
     }
   }

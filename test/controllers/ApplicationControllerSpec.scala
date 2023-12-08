@@ -3,8 +3,9 @@ package controllers
 import models.DataModel
 import org.scalatest.{BeforeAndAfter, BeforeAndAfterEach}
 import play.api.http.Status
-import play.api.libs.json.{JsSuccess, JsValue, Json}
-import play.api.mvc.{Action, AnyContent, Result}
+import play.api.libs.json.{JsValue, Json}
+import play.api.mvc.{AnyContentAsFormUrlEncoded, Result}
+import play.api.test.CSRFTokenHelper.CSRFRequest
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
@@ -15,7 +16,6 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
 
   val TestApplicationController = new ApplicationController(
     component,
-//    repository,
     service,
     repoService
   )
@@ -327,18 +327,71 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
     }
   }
 
-//  "ApplicationController .getGoogleBook" should {
-//    "find a book, store it in Mongo and produce the book data in a browser window" in {
-//      beforeEach()
-//      val fetchedResult: Result =
-//        TestApplicationController.getGoogleBook("flowers", "inauthor:keyes")
-//      assert(fetchedResult.header.status == Status.OK)
-//
-//      val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())
-//      assert(status(readResult) == Status.OK)
-//      assert(contentAsJson(readResult).as[JsValue] == Json.toJson(dataModel))
-//
-//    }
-//  }
+  "ApplicationController .getGoogleBook" should {
+    "find a book, store it in Mongo and produce the book data in a browser window" in {
+      beforeEach()
+      val fetchedResult: Result =
+        await(TestApplicationController.getGoogleBook("flowers", "inauthor:keyes")(FakeRequest()))
+      assert(fetchedResult.header.status == Status.CREATED)
 
+//      Check whether a book with the name flowers for algernon exists
+      val readResult: Future[Result] =
+        TestApplicationController.readAny("name", "Flowers for Algernon")(FakeRequest())
+      assert(status(readResult) == Status.OK)
+    }
+  }
+
+  "Adding new book via browser form" should {
+    "create a new book and add it to MongoDB" in {
+      beforeEach()
+//      Create a book via form and check it has actually created
+      val request: FakeRequest[AnyContentAsFormUrlEncoded] =
+        buildPost("/addbook/form")
+          .withFormUrlEncodedBody(
+            "_id" -> "blue",
+            "name" -> "is a colour",
+            "description" -> "something about colours",
+            "numSales" -> "42",
+            "isbn" -> "colore"
+          )
+      val createdResult: Future[Result] = (TestApplicationController.addNewBookForm()(request))
+      assert(status(createdResult) == Status.CREATED)
+      assert(
+        contentAsJson(createdResult) == Json.toJson(
+          DataModel("blue", "is a colour", "something about colours", 42, "colore")
+        )
+      )
+
+//      Then verify it has been uploaded to the MongoDB
+      val readResult: Future[Result] = TestApplicationController.read("blue")(FakeRequest())
+      assert(status(readResult) == Status.OK)
+      assert(
+        contentAsJson(readResult).as[JsValue] == Json.toJson(
+          DataModel("blue", "is a colour", "something about colours", 42, "colore")
+        )
+      )
+    }
+  }
+
+  "Adding new book via browser form" should {
+    "create a bad book and try to add it to MongoDB" in {
+      beforeEach()
+      //      Create a book via form and check it has actually created
+      val request: FakeRequest[AnyContentAsFormUrlEncoded] =
+        buildPost("/addbook/form")
+          .withFormUrlEncodedBody(
+            "_id" -> "blue",
+            "name" -> "is a colour",
+            "description" -> "something about colours",
+            "numSales" -> "THROW AN ERROR: this is not meant to be a string!",
+            "isbn" -> "colore"
+          )
+      val createdResult: Future[Result] = (TestApplicationController.addNewBookForm()(request))
+      assert(status(createdResult) == Status.BAD_REQUEST)
+
+      //      Then verify it has been uploaded to the MongoDB
+      val readResult: Future[Result] = TestApplicationController.read("blue")(FakeRequest())
+      assert(status(readResult) == Status.BAD_REQUEST)
+    }
+  }
 }

@@ -13,6 +13,13 @@ class RepositoryService @Inject() (
     val dataRepoTrait: DataRepoTrait
 )(implicit executionContext: ExecutionContext) {
 
+  def createGoogleBook(book: DataModel): Future[Either[String, DataModel]] = {
+    dataRepoTrait.create(book).map {
+      case None => Left("ERROR: Duplicate found, item not created.")
+      case _ => Right(book)
+    }
+  }
+
   def create(request: Request[JsValue]): Future[Either[String, DataModel]] = {
     request.body.validate[DataModel] match {
       case JsSuccess(book, _) =>
@@ -65,11 +72,10 @@ class RepositoryService @Inject() (
   def readAny[T](field: String, value: T): Future[Either[String, DataModel]] = {
     for {
       book <- dataRepoTrait.readAny(field, value)
-      res = book match {
-        case Some(item: DataModel) => Right(item)
-        case _ | None => Left("ERROR: Unable to read book.")
+      res = book.map { item: DataModel =>
+        Right(item)
       }
-    } yield res
+    } yield res.getOrElse(Left("ERROR: Unable to read book."))
   }
 
   def delete(id: String): Future[Either[String, String]] = {

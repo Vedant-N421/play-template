@@ -1,7 +1,7 @@
 [0m[[0m[0mdebug[0m] [0m[0mjavaOptions: Vector()[0m
 [0m[[0m[0mdebug[0m] [0m[0mForking tests - parallelism = false[0m
 [0m[[0m[0mdebug[0m] [0m[0mCreate a single-thread test executor[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunner for org.scalatest.tools.Framework produced 3 initial tasks for 3 tests.[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunner for org.scalatest.tools.Framework produced 4 initial tasks for 4 tests.[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(controllers.HomeControllerSpec, sbt.ForkMain$SubclassFingerscan@4ae3c1cd, false, [SuiteSelector])[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mHomeControllerSpec:[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mHomeController GET[0m[0m
@@ -15,7 +15,7 @@
 [0m[[0m[0minfo[0m] [0m[0m[31m          <title>This is a Play Scala API demo</title>[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[31m          <link rel="stylesheet" media="screen" href="/assets/stylesheets/main.css">[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[31m          <link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png">[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m  [0m
+[0m[[0m[0minfo[0m] [0m[0m[31m          <link rel="stylesheet" type="text/css" media="screen" href="/assets//stylesheets/main.css">[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[31m      </head>[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[31m      <body>[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m          [0m
@@ -116,7 +116,7 @@
 [0m[[0m[0minfo[0m] [0m[0m[31m          <title>This is a Play Scala API demo</title>[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[31m          <link rel="stylesheet" media="screen" href="/assets/stylesheets/main.css">[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[31m          <link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png">[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m  [0m
+[0m[[0m[0minfo[0m] [0m[0m[31m          <link rel="stylesheet" type="text/css" media="screen" href="/assets//stylesheets/main.css">[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[31m      </head>[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[31m      <body>[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m          [0m
@@ -217,7 +217,7 @@
 [0m[[0m[0minfo[0m] [0m[0m[31m          <title>This is a Play Scala API demo</title>[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[31m          <link rel="stylesheet" media="screen" href="/assets/stylesheets/main.css">[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[31m          <link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png">[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m  [0m
+[0m[[0m[0minfo[0m] [0m[0m[31m          <link rel="stylesheet" type="text/css" media="screen" href="/assets//stylesheets/main.css">[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[31m      </head>[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[31m      <body>[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m          [0m
@@ -345,22 +345,50 @@
 [0m[[0m[0minfo[0m] [0m[0m[32m- should delete a book in the database by id[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .delete() with a bad request[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should return an error[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 17 events.[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .getGoogleBook[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should find a book, store it in Mongo and produce the book data in a browser window[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 18 events.[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(controllers.LibraryServiceSpec, sbt.ForkMain$SubclassFingerscan@568bf312, false, [SuiteSelector])[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mLibraryServiceSpec:[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mgetGoogleBook[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m- should return a book[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- should return a book *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  play.api.libs.json.JsResultException: JsResultException(errors:List((/etag,List(JsonValidationError(List(error.path.missing),ArraySeq()))), (/selfLink,List(JsonValidationError(List(error.path.missing),ArraySeq()))), (/volumeInfo,List(JsonValidationError(List(error.path.missing),ArraySeq()))), (/id,List(JsonValidationError(List(error.path.missing),ArraySeq()))), (/kind,List(JsonValidationError(List(error.path.missing),ArraySeq())))))[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at play.api.libs.json.JsReadable.$anonfun$as$2(JsReadable.scala:25)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at play.api.libs.json.JsError.fold(JsResult.scala:66)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at play.api.libs.json.JsReadable.as(JsReadable.scala:24)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at play.api.libs.json.JsReadable.as$(JsReadable.scala:23)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at play.api.libs.json.JsObject.as(JsValue.scala:126)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at controllers.LibraryServiceSpec.$anonfun$new$2(LibraryServiceSpec.scala:37)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf(OutcomeOf.scala:85)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf$(OutcomeOf.scala:83)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf$.outcomeOf(OutcomeOf.scala:104)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:22)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32man error case[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should return an error[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 2 events.[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 2 seconds, 941 milliseconds.[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 22[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 3, aborted 0[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 19, failed 3, canceled 0, ignored 0, pending 0[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[31m*** 3 TESTS FAILED ***[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(controllers.RepositoryServiceSpec, sbt.ForkMain$SubclassFingerscan@ca263c2, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mRepositoryServiceSpec:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mindex[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should return an empty sequence of datamodel[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mcreate[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should return the datamodel after succeeding in creating an entry in the DB[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mread[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should return the datamodel after succeeding in reading an entry in the DB[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mupdate[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should return the new datamodel after succeeding in updating an entry in the DB[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mdelete[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should return the result of deleting an entry in the DB[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 5 events.[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 3 seconds, 842 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 28[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 4, aborted 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 24, failed 4, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m*** 4 TESTS FAILED ***[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mPassed tests:[0m
 [0m[[0m[0mdebug[0m] [0m[0m	controllers.ApplicationControllerSpec[0m
-[0m[[0m[0mdebug[0m] [0m[0m	controllers.LibraryServiceSpec[0m
+[0m[[0m[0mdebug[0m] [0m[0m	controllers.RepositoryServiceSpec[0m
 [0m[[0m[31merror[0m] [0m[0mFailed tests:[0m
 [0m[[0m[31merror[0m] [0m[0m	controllers.HomeControllerSpec[0m
+[0m[[0m[31merror[0m] [0m[0m	controllers.LibraryServiceSpec[0m
 [0m[[0m[31merror[0m] [0m[0m(Test / [31mtest[0m) sbt.TestsFailedException: Tests unsuccessful[0m

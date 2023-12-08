@@ -58,18 +58,18 @@ class DataRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: Exe
   }
 
   private def byAny[T](field: String, value: T): Bson = {
-    Filters.and {
+    Filters.and(
       Filters.equal(
         field match {
           case field if field == "id" => "_id"
-          case field if List("name", "description", "numSales").contains(field) => field
+          case field if List("name", "description", "numSales", "isbn").contains(field) => field
           case _ =>
             println("Invalid field name specified, defaulting to id!")
             "_id"
         },
         value
       )
-    }
+    )
   }
 
   private def byID(id: String): Bson =
@@ -78,16 +78,27 @@ class DataRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: Exe
     )
 
   def readAny[T](field: String, value: T): Future[Option[DataModel]] = {
-    collection.find(byAny(field, value)).headOption.flatMap {
-      case Some(data) => Future(Some(data))
-      case _ => Future(None)
-    }
+    collection
+      .find(byAny(field, value))
+      .headOption()
+      .flatMap {
+        case Some(data) =>
+          Future(Some(data))
+        case _ =>
+          Future(None)
+      }
+      .recover { case error =>
+        None
+      }
+
   }
 
   def read(id: String): Future[Option[DataModel]] =
-    collection.find(byID(id)).headOption.flatMap {
-      case Some(data) => Future(Some(data))
-      case _ => Future(None)
+    collection.find(byID(id)).headOption().flatMap {
+      case Some(data) =>
+        Future(Some(data))
+      case _ =>
+        Future(None)
     }
 
   def update(id: String, book: DataModel): Future[result.UpdateResult] =
@@ -112,7 +123,7 @@ class DataRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: Exe
           case "isbn" => book.copy(isbn = value.toString)
           case _ => book
         }
-        (update(id, updatedBook)).map(thing => Some(updatedBook))
+        update(id, updatedBook).map(thing => Some(updatedBook))
       case _ => Future.successful(None)
     }
   }

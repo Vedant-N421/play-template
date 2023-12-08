@@ -1,7 +1,7 @@
 package controllers
 
 import models.DataModel.dataForm
-import models.{APIError, DataModel}
+import models.{APIError, Book, DataModel}
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
 import play.filters.csrf.CSRF
@@ -64,8 +64,10 @@ class ApplicationController @Inject() (
 
   def readAny[T](field: String, value: T): Action[AnyContent] = Action.async { implicit request =>
     repositoryService.readAny(field, value).map {
-      case Right(book: DataModel) => Ok(Json.toJson(book))
-      case Left(error) => BadRequest(Json.toJson(error))
+      case Right(book: DataModel) =>
+        Ok(Json.toJson(book))
+      case Left(error) =>
+        BadRequest(Json.toJson(error))
     }
   }
 
@@ -76,27 +78,34 @@ class ApplicationController @Inject() (
     }
   }
 
+  def convertToDataModel(book: Book): DataModel = {
+    DataModel(
+      book.id,
+      book.volumeInfo.title,
+      book.volumeInfo.description.getOrElse("Empty description."),
+      1,
+      book.volumeInfo.industryIdentifiers.head.identifier
+    )
+  }
+
   def getGoogleBook(search: String, term: String): Action[AnyContent] = Action.async {
     implicit request =>
-      service.getGoogleBook(search = search, term = term).value.map {
-        case Right(books) =>
-          val dataModelList: List[DataModel] = books.map(book =>
-            DataModel(
-              _id = book.id,
-              name = book.volumeInfo.title,
-              description = book.volumeInfo.description.getOrElse("Empty description."),
-              numSales = 1,
-              isbn = book.volumeInfo.industryIdentifiers.head.identifier
-            )
-          )
-          dataModelList.map(dataModel => repositoryService.createGoogleBook(dataModel))
-          Created
-
-        case Left(error) => Status(error.httpResponseStatus)(error.reason)
+//      print("F1")
+      service.getGoogleBook(search = search, term = term).value.flatMap {
+        case Right(books: List[Book]) =>
+          val bookList = books.map { book =>
+            repositoryService.createGoogleBook(convertToDataModel(book))
+          }
+          bookList.head.map {
+            case Right(book: DataModel) => Created(Json.toJson(book))
+            case Left(err: String) => BadRequest(err)
+          }
+        case Left(error) =>
+          Future(BadRequest(Json.toJson(error.reason)))
       }
   }
 
-  private def accessToken(implicit request: Request[_]) = {
+  private def accessToken(implicit request: Request[_]): Option[CSRF.Token] = {
     CSRF.getToken
   }
 
@@ -111,15 +120,16 @@ class ApplicationController @Inject() (
       .fold( // from the implicit request we want to bind this to the form in our companion object
         formWithErrors => {
           // here write what you want to do if the form has errors
-          Future(BadRequest("ERROR: Form had errors"))
+          Future(BadRequest("ERROR: Data entered did not match requirements!"))
         },
         formData => {
           // here write how you would use this data to create a new book (DataModel)
           repositoryService.createGoogleBook(formData).map {
             case Right(book: DataModel) => Created(Json.toJson(book))
-            case Left(err: String) => BadRequest(err)
+            case Left(err: String) => BadRequest(Json.toJson(err))
           }
         }
       )
   }
+
 }

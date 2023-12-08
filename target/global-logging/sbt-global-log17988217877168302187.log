@@ -1,7 +1,8 @@
-[0m[[0m[0mdebug[0m] [0m[0m> Exec(testOnly *ApplicationControllerSpec, Some(371a6f79-ba67-487e-8bcb-3e89c2ffbe5d), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(testOnly *ApplicationControllerSpec, Some(752c7177-9026-4779-a25d-0ca694cceb8b), Some(CommandSource(console0)))[0m
 [0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Test / testOnly[0m
 [0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
 [0m[[0m[0mdebug[0m] [0m[0mExporting web-assets:play-template[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 1 Scala source to /Users/vedant.nemane/Documents/GitHub/play-template/target/scala-2.13/test-classes ...[0m
 [0m[[0m[0mdebug[0m] [0m[0mExporting web-assets-test:play-template[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationControllerSpec:[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .index[0m[0m
@@ -38,11 +39,16 @@
 [0m[[0m[0minfo[0m] [0m[0m[32m- should delete a book in the database by id[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .delete() with a bad request[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should return an error[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 2 seconds, 556 milliseconds.[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 17[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .getGoogleBook[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should find a book, store it in Mongo and produce the book data in a browser window[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mAdding new book via browser form[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should create a new book and add it to MongoDB[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mAdding new book via browser form[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should create a bad book and try to add it to MongoDB[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 6 seconds, 573 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 20[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 1, aborted 0[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 17, failed 0, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 20, failed 0, canceled 0, ignored 0, pending 0[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mAll tests passed.[0m[0m
-[0m[[0m[32msuccess[0m] [0m[0mTotal time: 3 s, completed 1 Dec 2023, 16:48:22[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 7 s, completed 8 Dec 2023, 11:11:45[0m
 [0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m
-[0m[[0m[0mdebug[0m] [0m[0mForcing garbage collection...[0m

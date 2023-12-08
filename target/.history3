@@ -28,3 +28,8 @@
 1701768787605:run
 1701793372304:;set _root_.scala.collection.Seq(historyPath := None,shellPrompt := { _ => "" },SettingKey[_root_.scala.Option[_root_.sbt.File]]("sbtStructureOutputFile") in _root_.sbt.Global := _root_.scala.Some(_root_.sbt.file("/private/var/folders/z2/gq3_z7rj7cx2n0xt0_0vnprc0000gn/T/sbt-structure.xml")),SettingKey[_root_.java.lang.String]("sbtStructureOptions") in _root_.sbt.Global := "download, resolveClassifiers");apply -cp "/Users/vedant.nemane/Library/Application Support/JetBrains/IntelliJIdea2023.2/plugins/Scala/repo/org/jetbrains/scala/sbt-structure-extractor_2.12_1.0/2023.1.0/sbt-structure-extractor-2023.1.0.jar" org.jetbrains.sbt.CreateTasks;preferScala2;*/*:dumpStructure
 1701794069039:run
+1701863080695:testOnly *ApplicationControllerSpec
+1701871325559:test
+1701941578076:testOnly *ApplicationControllerSpec
+1701948247085:[A
+1701948249191:testOnly *ApplicationControllerSpec

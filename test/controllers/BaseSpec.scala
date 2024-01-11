@@ -57,8 +57,9 @@ trait BaseSpecWithApplication
 
   implicit val messages: Messages = messagesApi.preferred(fakeRequest)
 
-  def buildPost(url: String): FakeRequest[AnyContentAsEmpty.type] =
+  def buildPost(url: String): FakeRequest[AnyContentAsEmpty.type] = {
     FakeRequest(POST, url).withCSRFToken.asInstanceOf[FakeRequest[AnyContentAsEmpty.type]]
+  }
 
   def buildGet(url: String): FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest(GET, url).withCSRFToken.asInstanceOf[FakeRequest[AnyContentAsEmpty.type]]

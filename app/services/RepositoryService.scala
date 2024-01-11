@@ -1,7 +1,9 @@
 package services
 
 import com.mongodb.client.result.DeleteResult
+import models.APIError.BadRequestError
 import models.{APIError, DataModel}
+import org.mongodb.scala.result.UpdateResult
 import play.api.libs.json.{JsError, JsSuccess, JsValue}
 import play.api.mvc.Request
 import repositories.DataRepoTrait
@@ -9,78 +11,49 @@ import repositories.DataRepoTrait
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class RepositoryService @Inject() (
+class RepositoryService @Inject()(
     val dataRepoTrait: DataRepoTrait
 )(implicit executionContext: ExecutionContext) {
 
-  def createGoogleBook(book: DataModel): Future[Either[String, DataModel]] = {
-    dataRepoTrait.create(book).map {
-      case None => Left("ERROR: Duplicate found, item not created.")
-      case _ => Right(book)
-    }
-  }
+  def createGoogleBook(book: DataModel): Future[Either[APIError, DataModel]] = dataRepoTrait.create(book)
 
-  def create(request: Request[JsValue]): Future[Either[String, DataModel]] = {
+  def create(request: Request[JsValue]): Future[Either[APIError, DataModel]] = {
     request.body.validate[DataModel] match {
-      case JsSuccess(book, _) =>
-        dataRepoTrait.create(book).map {
-          case None => Left("ERROR: Duplicate found, item not created.")
-          case _ => Right(book)
-        }
-      case JsError(_) => Future(Left("ERROR: Item not created."))
+      case JsSuccess(book, _) => dataRepoTrait.create(book)
+      case JsError(_) => Future(Left(BadRequestError()))
     }
   }
 
-  def update(id: String, request: Request[JsValue]): Future[Either[String, DataModel]] = {
+  def update(id: String, request: Request[JsValue]): Future[Either[APIError, Boolean]] = {
     request.body.validate[DataModel] match {
       case JsSuccess(book: DataModel, _) =>
-        dataRepoTrait.update(id, book)
-        Future(Right(book))
-      case JsError(_) => Future(Left("ERROR: Item not updated."))
+        dataRepoTrait.update(id, book).map {
+          case Right(x: UpdateResult) => Right(x.wasAcknowledged())
+        }
+      case JsError(_) => Future(Left(BadRequestError()))
     }
   }
 
   def partialUpdate[T](
       id: String,
       field: String,
-      value: T,
-      request: Request[JsValue]
-  ): Future[Either[String, DataModel]] = {
+      value: T
+  ): Future[Either[APIError, Boolean]] = {
     dataRepoTrait.partialUpdate(id, field, value).map {
-      case Some(book) => Right(book)
-      case _ => Left("ERROR: Item not updated.")
+      case Right(x) => Right(x.wasAcknowledged())
+      case Left(error) => Left(error)
     }
   }
 
-  def index(): Future[Either[APIError, Seq[DataModel]]] = {
-    dataRepoTrait.index().map {
-      case Right(item: Seq[DataModel]) => Right(item)
-      case Left(error: APIError.BadAPIResponse) => Left(error)
-    }
-  }
+  def index(): Future[Either[APIError, Seq[DataModel]]] = dataRepoTrait.index()
 
-  def read(id: String): Future[Either[String, DataModel]] = {
-    for {
-      book <- dataRepoTrait.read(id)
-      res = book match {
-        case Some(item: DataModel) => Right(item)
-        case _ | None => Left("ERROR: Unable to read book.")
-      }
-    } yield res
-  }
+  def read(id: String): Future[Either[APIError, DataModel]] = dataRepoTrait.read(id)
 
-  def readAny[T](field: String, value: T): Future[Either[String, DataModel]] = {
-    for {
-      book <- dataRepoTrait.readAny(field, value)
-      res = book.map { item: DataModel =>
-        Right(item)
-      }
-    } yield res.getOrElse(Left("ERROR: Unable to read book."))
-  }
+  def readAny[T](field: String, value: T): Future[Either[APIError, DataModel]] = dataRepoTrait.readAny(field, value)
 
-  def delete(id: String): Future[Either[String, String]] = {
+  def delete(id: String): Future[Either[APIError, Boolean]] = {
     dataRepoTrait.delete(id: String).map {
-      case Right(_: DeleteResult) => Right("INFO: Item was deleted successfully.")
+      case Right(x: DeleteResult) => Right(x.wasAcknowledged())
       case Left(error) => Left(error)
     }
   }

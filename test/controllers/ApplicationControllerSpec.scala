@@ -1,6 +1,6 @@
 package controllers
 
-import models.DataModel
+import models.{APIError, DataModel}
 import org.scalatest.{BeforeAndAfter, BeforeAndAfterEach}
 import play.api.http.Status
 import play.api.libs.json.{JsValue, Json}
@@ -58,6 +58,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
     }
   }
 
+  // make it more clear in your tests what you are doing! i.e. uploading the same book twice etc
   "ApplicationController .create duplicate request" should {
     "create a book in the database and catch the duplicate request" in {
       beforeEach()
@@ -97,7 +98,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
 
       val readResult: Future[Result] = TestApplicationController.read(baddy)(FakeRequest())
       assert(status(readResult) == Status.BAD_REQUEST)
-      assert(contentAsJson(readResult).as[JsValue] == Json.toJson("ERROR: Unable to read book."))
+      assert(contentAsJson(readResult).as[JsValue] == Json.toJson(APIError.ResourceNotFound().reason))
     }
   }
 
@@ -142,7 +143,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
       val readResult: Future[Result] =
         TestApplicationController.readAny("name", baddy)(FakeRequest())
       assert(status(readResult) == Status.BAD_REQUEST)
-      assert(contentAsJson(readResult).as[JsValue] == Json.toJson("ERROR: Unable to read book."))
+      assert(contentAsJson(readResult).as[JsValue] == Json.toJson(APIError.ResourceNotFound().reason))
     }
   }
 
@@ -157,7 +158,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
       val readResult: Future[Result] =
         TestApplicationController.readAny(baddy, "sjndfnjosfn")(FakeRequest())
       assert(status(readResult) == Status.BAD_REQUEST)
-      assert(contentAsJson(readResult).as[JsValue] == Json.toJson("ERROR: Unable to read book."))
+      assert(contentAsJson(readResult).as[JsValue] == Json.toJson(APIError.ResourceNotFound().reason))
     }
   }
 
@@ -222,13 +223,14 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
       // To then be updated by the following code
       val updateRequest: FakeRequest[JsValue] =
         buildPost(s"/update/${dataModel._id}").withBody[JsValue](Json.toJson(dataModel))
+
       val updateResult: Result =
         await(
           TestApplicationController.partialUpdate(id = "hiafnadfjn", "name", "replaced")(
             updateRequest
           )
         )
-      // Check if request was accepted
+      // Check if request was identified as useless
       assert(updateResult.header.status == Status.BAD_REQUEST)
 
       val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())
@@ -272,6 +274,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
     }
   }
 
+  // descriptive with the test scenario
   "ApplicationController .update() with a bad request" should {
     "return an error" in {
       beforeEach()
@@ -288,6 +291,8 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
         await(TestApplicationController.update(baddy)(updateRequest))
 
       // Check if request was accepted
+      // error code/http code here? for the "bad" request? more descriptive?
+      // the status can be "bad request" but the message could actually give away what's the problem
       assert(updateResult.header.status == Status.BAD_REQUEST)
     }
   }
@@ -295,14 +300,13 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
   "ApplicationController .delete()" should {
     "delete a book in the database by id" in {
       beforeEach()
-      // First we create a book to be deleted
+
       val request: FakeRequest[JsValue] =
         buildPost(s"/create").withBody[JsValue](Json.toJson(dataModel))
       val createdResult: Result = await(TestApplicationController.create()(request))
-      // and we check that it actually does get made
+
       assert(createdResult.header.status == Status.CREATED)
 
-      // and then we check if it gets deleted
       val deleteResult: Result =
         await(TestApplicationController.delete(dataModel._id)(FakeRequest()))
       assert(deleteResult.header.status == Status.ACCEPTED)
@@ -313,17 +317,16 @@ class ApplicationControllerSpec extends BaseSpecWithApplication with BeforeAndAf
   "ApplicationController .delete() with a bad request" should {
     "return an error" in {
       beforeEach()
-      // First we create a book to be deleted
+
       val request: FakeRequest[JsValue] =
         buildGet(s"/create").withBody[JsValue](Json.toJson(dataModel))
       val createdResult: Result = await(TestApplicationController.create()(request))
-      // and we check that it actually does get made
+
       assert(createdResult.header.status == Status.CREATED)
 
-      // and the code will still return an accepted if it found nothing to delete
       val deleteResult: Result =
         await(TestApplicationController.delete(baddy)(FakeRequest()))
-      assert(deleteResult.header.status == Status.BAD_REQUEST)
+      assert(deleteResult.header.status == Status.ACCEPTED)
     }
   }
 

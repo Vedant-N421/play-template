@@ -1,7 +1,7 @@
 package controllers
 
 import models.DataModel.dataForm
-import models.{APIError, Book, DataModel}
+import models.{APIError, DataModel}
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
 import play.filters.csrf.CSRF
@@ -10,7 +10,7 @@ import services.{LibraryService, RepositoryService}
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class ApplicationController @Inject() (
+class ApplicationController @Inject()(
     val controllerComponents: ControllerComponents,
     val service: LibraryService,
     val repositoryService: RepositoryService
@@ -21,88 +21,69 @@ class ApplicationController @Inject() (
   def create(): Action[JsValue] = Action.async(parse.json) { implicit request =>
     repositoryService.create(request).map {
       case Right(book) => Created(Json.toJson(book))
-      case Left(error) => BadRequest(Json.toJson(error))
+      case Left(error) => BadRequest(Json.toJson(error.reason))
     }
   }
 
   def example(id: String): Action[AnyContent] = Action.async { implicit request =>
     repositoryService.read(id).map {
-      case Right(book: DataModel) => Ok(views.html.example(book))
-      case Left(err: String) =>
-        BadRequest(views.html.example(DataModel("404", "404", "404", 404, "404")))
+      case Right(book) => Ok(views.html.example(book))
+      case Left(error) => BadRequest(Json.toJson(error.reason))
     }
   }
 
   def update(id: String): Action[JsValue] = Action.async(parse.json) { implicit request =>
     repositoryService.update(id, request).map {
       case Right(book) => Accepted(Json.toJson(book))
-      case Left(error) => BadRequest(Json.toJson(error))
+      case Left(error) => BadRequest(Json.toJson(error.reason))
     }
   }
 
   def partialUpdate[T](id: String, field: String, value: T): Action[JsValue] =
     Action.async(parse.json) { implicit request =>
-      repositoryService.partialUpdate(id, field, value, request).map {
-        case Right(book) => (Accepted(Json.toJson(book)))
-        case Left(error) => (BadRequest(Json.toJson(error)))
+      repositoryService.partialUpdate(id, field, value).map {
+        case Right(book) => Accepted(Json.toJson(book))
+        case Left(error) => BadRequest(Json.toJson(error.reason))
       }
     }
 
   def index(): Action[AnyContent] = Action.async { implicit request =>
     repositoryService.index().flatMap {
       case Right(item: Seq[DataModel]) => Future(Ok(Json.toJson(item)))
-      case Left(error: APIError.BadAPIResponse) => Future(BadRequest(Json.toJson(error)))
+      case Left(error: APIError.BadAPIResponse) => Future(BadRequest(Json.toJson(error.reason)))
     }
   }
 
   def read(id: String): Action[AnyContent] = Action.async { implicit request =>
     repositoryService.read(id).map {
       case Right(book: DataModel) => Ok(Json.toJson(book))
-      case Left(error) => BadRequest(Json.toJson(error))
+      case Left(error) => BadRequest(Json.toJson(error.reason))
     }
   }
 
   def readAny[T](field: String, value: T): Action[AnyContent] = Action.async { implicit request =>
     repositoryService.readAny(field, value).map {
-      case Right(book: DataModel) =>
-        Ok(Json.toJson(book))
-      case Left(error) =>
-        BadRequest(Json.toJson(error))
+      case Right(book: DataModel) => Ok(Json.toJson(book))
+      case Left(error) => BadRequest(Json.toJson(error.reason))
     }
   }
 
   def delete(id: String): Action[AnyContent] = Action.async { implicit request =>
     repositoryService.delete(id: String).map {
       case Right(message) => Accepted(Json.toJson(message))
-      case Left(error) => BadRequest(Json.toJson(error))
+      case Left(error) => BadRequest(Json.toJson(error.reason))
     }
   }
 
-  def convertToDataModel(book: Book): DataModel = {
-    DataModel(
-      book.id,
-      book.volumeInfo.title,
-      book.volumeInfo.description.getOrElse("Empty description."),
-      1,
-      book.volumeInfo.industryIdentifiers.head.identifier
-    )
-  }
-
-  def getGoogleBook(search: String, term: String): Action[AnyContent] = Action.async {
-    implicit request =>
-//      print("F1")
-      service.getGoogleBook(search = search, term = term).value.flatMap {
-        case Right(books: List[Book]) =>
-          val bookList = books.map { book =>
-            repositoryService.createGoogleBook(convertToDataModel(book))
-          }
-          bookList.head.map {
-            case Right(book: DataModel) => Created(Json.toJson(book))
-            case Left(err: String) => BadRequest(err)
-          }
-        case Left(error) =>
-          Future(BadRequest(Json.toJson(error.reason)))
-      }
+  def getGoogleBook(search: String, term: String): Action[AnyContent] = Action.async { implicit request =>
+    service.getGoogleBook(search, term).value.flatMap {
+      // Search for the books, add them to Mongo and get the first one to return "created"
+      case Right(books) =>
+        books.map(book => repositoryService.createGoogleBook(book)).head.map {
+          case Right(x: DataModel) => Created(Json.toJson(x))
+        }
+      case Left(error) => Future(BadRequest(Json.toJson(error.reason)))
+    }
   }
 
   private def accessToken(implicit request: Request[_]): Option[CSRF.Token] = {
@@ -117,16 +98,14 @@ class ApplicationController @Inject() (
     accessToken // call the accessToken method
     dataForm
       .bindFromRequest()
-      .fold( // from the implicit request we want to bind this to the form in our companion object
+      .fold(
         formWithErrors => {
-          // here write what you want to do if the form has errors
-          Future(BadRequest("ERROR: Data entered did not match requirements!"))
+          Future(BadRequest("Data validation error."))
         },
         formData => {
-          // here write how you would use this data to create a new book (DataModel)
           repositoryService.createGoogleBook(formData).map {
-            case Right(book: DataModel) => Created(Json.toJson(book))
-            case Left(err: String) => BadRequest(Json.toJson(err))
+            case Right(book) => Created(Json.toJson(book))
+            case Left(error) => BadRequest(Json.toJson(error.reason))
           }
         }
       )

@@ -347,7 +347,11 @@
 [0m[[0m[0minfo[0m] [0m[0m[32m- should return an error[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .getGoogleBook[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should find a book, store it in Mongo and produce the book data in a browser window[0m[0m
-[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 18 events.[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mAdding new book via browser form[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should create a new book and add it to MongoDB[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mAdding new book via browser form[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should create a bad book and try to add it to MongoDB[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 20 events.[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(controllers.LibraryServiceSpec, sbt.ForkMain$SubclassFingerscan@568bf312, false, [SuiteSelector])[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mLibraryServiceSpec:[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mgetGoogleBook[0m[0m
@@ -380,10 +384,10 @@
 [0m[[0m[0minfo[0m] [0m[0m[32mdelete[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should return the result of deleting an entry in the DB[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 5 events.[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 3 seconds, 842 milliseconds.[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 28[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 3 seconds, 836 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 30[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 4, aborted 0[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 24, failed 4, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 26, failed 4, canceled 0, ignored 0, pending 0[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[31m*** 4 TESTS FAILED ***[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mPassed tests:[0m
 [0m[[0m[0mdebug[0m] [0m[0m	controllers.ApplicationControllerSpec[0m

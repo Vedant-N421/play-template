@@ -9,14 +9,13 @@ import javax.inject.Inject
 import scala.annotation.tailrec
 import scala.concurrent.{ExecutionContext, Future}
 
-class LibraryConnector @Inject() (ws: WSClient) {
+class LibraryConnector @Inject()(ws: WSClient) {
 
   def get[Response](
       url: String
   )(implicit
-      rds: OFormat[Response],
-      ec: ExecutionContext
-  ): EitherT[Future, APIError, List[Book]] = {
+    rds: OFormat[Response],
+    ec: ExecutionContext): EitherT[Future, APIError, List[Book]] = {
 
 //    Had to do it to 'em, an unnecessary piece of code below :)
     @tailrec
@@ -41,8 +40,9 @@ class LibraryConnector @Inject() (ws: WSClient) {
 //          Right(read_all_books(result.json("items"), List(), 0))
           Right(result.json("items").as[List[Book]])
         }
-        .recover { case _: WSResponse =>
-          (Left(APIError.BadAPIResponse(500, "Could not connect")))
+        .recover {
+          case _: WSResponse =>
+            (Left(APIError.BadAPIResponse(500, "Could not connect")))
         }
     }
 

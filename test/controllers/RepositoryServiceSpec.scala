@@ -16,11 +16,7 @@ import services.RepositoryService
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class RepositoryServiceSpec
-    extends BaseSpec
-    with MockFactory
-    with ScalaFutures
-    with GuiceOneAppPerSuite {
+class RepositoryServiceSpec extends BaseSpec with MockFactory with ScalaFutures with GuiceOneAppPerSuite {
 
   val mockRepository: DataRepoTrait = mock[DataRepoTrait]
   implicit val executionContext: ExecutionContext =
@@ -64,14 +60,15 @@ class RepositoryServiceSpec
   "create" should {
     "return the datamodel after succeeding in creating an entry in the DB" in {
       (mockRepository.create _)
-        .expects(book1.as[DataModel])
-        .returning(Future(Some(book1.as[DataModel])))
+        .expects(*)
+        .returning(Future(Right(book1.as[DataModel])))
         .once()
       val request: FakeRequest[JsValue] =
         buildPost("/create")
           .withBody[JsValue](Json.toJson(book1))
+
       whenReady(testService.create(request)) {
-        case Left(err) => assert(err == "ERROR: Duplicate found, item not created.")
+        case Left(_) => assert(false)
         case Right(dataModel) => assert(Json.toJson(dataModel) == book1)
       }
     }
@@ -80,11 +77,11 @@ class RepositoryServiceSpec
   "read" should {
     "return the datamodel after succeeding in reading an entry in the DB" in {
       (mockRepository.read _)
-        .expects("001")
-        .returning(Future(Some(book1.as[DataModel])))
+        .expects(*)
+        .returning(Future(Right(book1.as[DataModel])))
         .once()
       whenReady(testService.read("001")) {
-        case Left(err) => assert(err == "ERROR: Unable to read book.")
+        case Left(_) => assert(false)
         case Right(dataModel) => assert(Json.toJson(dataModel) == book1)
       }
     }
@@ -95,15 +92,19 @@ class RepositoryServiceSpec
       val mockUpdateResult = mock[UpdateResult]
       (mockRepository
         .update(_: String, _: DataModel))
-        .expects("001", book2.as[DataModel])
-        .returning(Future.successful(mockUpdateResult))
+        .expects(*, *)
+        .returning(Future(Right(mockUpdateResult)))
+        .once()
+      (mockUpdateResult.wasAcknowledged _)
+        .expects()
+        .returning(true)
         .once()
       val updateRequest: FakeRequest[JsValue] =
         buildPost(s"/update/${book1.as[DataModel]._id}")
           .withBody[JsValue](Json.toJson(book2.as[DataModel]))
       whenReady(testService.update(id = "001", request = updateRequest)) {
-        case Left(err: String) => assert(err == "ERROR: Item not updated.")
-        case Right(dataModel: DataModel) => assert(Json.toJson(dataModel) == book2)
+        case Left(_) => assert(false)
+        case Right(updated) => assert(updated)
       }
     }
   }
@@ -112,13 +113,18 @@ class RepositoryServiceSpec
     "return the result of deleting an entry in the DB" in {
       val mockDeleteResult = mock[DeleteResult]
       (mockRepository.delete _)
-        .expects("001")
+        .expects(*)
         .returning(Future.successful(Right(mockDeleteResult)))
         .once()
 
+      (mockDeleteResult.wasAcknowledged _)
+        .expects()
+        .returning(true)
+        .once()
+
       whenReady(testService.delete("001")) {
-        case Left(err) => assert(err == "ERROR: Unable to read book.")
-        case Right(res) => assert(res == "INFO: Item was deleted successfully.")
+        case Left(_) => assert(false)
+        case Right(deleted) => assert(deleted)
       }
     }
   }

@@ -1,6 +1,7 @@
 package repositories
 
 import com.google.inject.ImplementedBy
+import models.APIError.{ConflictError, NoContentError, ResourceNotFound}
 import models.{APIError, DataModel}
 import org.mongodb.scala.bson.conversions.Bson
 import org.mongodb.scala.model.Filters.empty
@@ -16,21 +17,21 @@ import scala.concurrent.{ExecutionContext, Future}
 trait DataRepoTrait {
   def index(): Future[Either[APIError, Seq[DataModel]]]
 
-  def create(book: DataModel): Future[Option[DataModel]]
+  def create(book: DataModel): Future[Either[APIError, DataModel]]
 
-  def read(id: String): Future[Option[DataModel]]
+  def read(id: String): Future[Either[APIError, DataModel]]
 
-  def readAny[T](field: String, value: T): Future[Option[DataModel]]
+  def readAny[T](field: String, value: T): Future[Either[APIError, DataModel]]
 
-  def update(id: String, book: DataModel): Future[result.UpdateResult]
+  def update(id: String, book: DataModel): Future[Either[models.APIError, result.UpdateResult]]
 
-  def partialUpdate[T](id: String, field: String, value: T): Future[Option[DataModel]]
+  def partialUpdate[T](id: String, field: String, value: T): Future[Either[APIError, result.UpdateResult]]
 
-  def delete(id: String): Future[Either[String, result.DeleteResult]]
+  def delete(id: String): Future[Either[APIError, result.DeleteResult]]
 }
 
 @Singleton
-class DataRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
+class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: ExecutionContext)
     extends PlayMongoRepository[DataModel](
       collectionName = "dataModels",
       mongoComponent = mongoComponent,
@@ -50,10 +51,10 @@ class DataRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: Exe
       case _ => Left(APIError.BadAPIResponse(404, "Books cannot be found"))
     }
 
-  def create(book: DataModel): Future[Option[DataModel]] = {
+  def create(book: DataModel): Future[Either[APIError, DataModel]] = {
     collection.find(byID(book._id)).headOption().flatMap {
-      case Some(_) => Future(None)
-      case _ => collection.insertOne(book).toFuture().map(_ => Some(book))
+      case Some(_) => Future.successful(Left(ConflictError()))
+      case _ => collection.insertOne(book).toFuture().map(_ => Right(book))
     }
   }
 
@@ -77,42 +78,42 @@ class DataRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: Exe
       Filters.equal("_id", id)
     )
 
-  def readAny[T](field: String, value: T): Future[Option[DataModel]] = {
+  def readAny[T](field: String, value: T): Future[Either[APIError, DataModel]] = {
     collection
       .find(byAny(field, value))
       .headOption()
       .flatMap {
         case Some(data) =>
-          Future(Some(data))
+          Future(Right(data))
         case _ =>
-          Future(None)
+          Future(Left(ResourceNotFound()))
       }
-      .recover { case error =>
-        None
-      }
-
   }
 
-  def read(id: String): Future[Option[DataModel]] =
+  def read(id: String): Future[Either[APIError, DataModel]] =
     collection.find(byID(id)).headOption().flatMap {
-      case Some(data) =>
-        Future(Some(data))
+      case Some(book) =>
+        Future(Right(book))
       case _ =>
-        Future(None)
+        Future(Left(ResourceNotFound()))
     }
 
-  def update(id: String, book: DataModel): Future[result.UpdateResult] =
+  def update(id: String, book: DataModel): Future[Either[APIError, result.UpdateResult]] =
     collection
       .replaceOne(
         filter = byID(id),
         replacement = book,
         options = new ReplaceOptions().upsert(
           false
-        ) // What happens when we set this to false? Ans: update doesn't insert a new record if it can't find it .
+        )
       )
       .toFuture()
+      .flatMap {
+        case x if x.wasAcknowledged() => Future(Right(x))
+        case _ => Future.successful(Left(ConflictError()))
+      }
 
-  def partialUpdate[T](id: String, field: String, value: T): Future[Option[DataModel]] = {
+  def partialUpdate[T](id: String, field: String, value: T): Future[Either[APIError, result.UpdateResult]] = {
     collection.find(byID(id)).headOption.flatMap {
       case Some(book) =>
         val updatedBook = field match {
@@ -123,18 +124,18 @@ class DataRepository @Inject() (mongoComponent: MongoComponent)(implicit ec: Exe
           case "isbn" => book.copy(isbn = value.toString)
           case _ => book
         }
-        update(id, updatedBook).map(thing => Some(updatedBook))
-      case _ => Future.successful(None)
+        update(id, updatedBook)
+      case _ => Future.successful(Left(NoContentError()))
     }
   }
 
-  def delete(id: String): Future[Either[String, result.DeleteResult]] = {
-    collection.find(byID(id)).headOption().flatMap {
-      case Some(_) => (collection.deleteOne(filter = byID(id)).toFuture().map(Right(_)))
-      case _ => Future(Left("INFO: Book not found, so no deletion with this operation!"))
+  def delete(id: String): Future[Either[APIError, result.DeleteResult]] = {
+    collection.deleteOne(byID(id)).toFuture().flatMap {
+      case x if x.wasAcknowledged() => Future(Right(x))
+      case _ => Future.successful(Left(ConflictError()))
     }
   }
 
   def deleteAll(): Future[Unit] =
-    collection.deleteMany(empty()).toFuture().map(_ => ()) // Hint: needed for tests
+    collection.deleteMany(empty()).toFuture().map(_ => ())
 }

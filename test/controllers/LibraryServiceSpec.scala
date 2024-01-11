@@ -11,34 +11,36 @@ import services.LibraryService
 
 import scala.concurrent.ExecutionContext
 
-class LibraryServiceSpec
-    extends BaseSpec
-    with MockFactory
-    with ScalaFutures
-    with GuiceOneAppPerSuite {
+class LibraryServiceSpec extends BaseSpec with MockFactory with ScalaFutures with GuiceOneAppPerSuite {
   val mockConnector: LibraryConnector = mock[LibraryConnector]
   implicit val executionContext: ExecutionContext = app.injector.instanceOf[ExecutionContext]
   val testService = new LibraryService(mockConnector)
 
   val gameOfThrones: JsValue = Json.obj(
-    "_id" -> "someId",
-    "name" -> "A Game of Thrones",
-    "description" -> "The best book!!!",
-    "numSales" -> 100
+    "kind" -> "someId",
+    "id" -> "A Game of Thrones",
+    "etag" -> "The best book!!!",
+    "selfLink" -> 100,
+    "selfLink" -> "somelink",
+    "volumeInfo" -> Json.obj(
+      "title" -> "String",
+      "subtitle" -> "Option[String]",
+      "authors" -> List("String"),
+      "description" -> "Option[String]",
+      "industryIdentifiers" -> List(Json.obj("identifier" -> "String", "type" -> "String"))
+    )
   )
 
   "getGoogleBook" should {
-//    val url: String = "testUrl"
-    val url: String = "https://www.googleapis.com/books/v1/volumes?q=flowers+inauthor"
+    val url: String = "https://www.googleapis.com/books/v1/volumes?q=flowers+inauthor:keyes"
     "return a book" in {
       (mockConnector
         .get[Book](_: String)(_: OFormat[Book], _: ExecutionContext))
-        .expects(url, *, *)
+        .expects(*, *, *)
         .returning(EitherT.rightT(List(gameOfThrones.as[Book])))
         .once()
-      whenReady(testService.getGoogleBook(urlOverride = Some(url), search = "", term = "").value) {
-        result =>
-          assert(result == Right(List(gameOfThrones.as[Book])))
+      whenReady(testService.getGoogleBook(urlOverride = Some(url), search = "", term = "").value) { result =>
+        assert(result == Right(List(gameOfThrones.as[Book])))
       }
     }
   }
@@ -51,9 +53,8 @@ class LibraryServiceSpec
         .expects(url, *, *)
         .returning(EitherT.leftT(APIError.BadAPIResponse(500, "Could not connect")))
         .once()
-      whenReady(testService.getGoogleBook(urlOverride = Some(url), search = "", term = "").value) {
-        result =>
-          assert(result == Left(APIError.BadAPIResponse(500, "Could not connect")))
+      whenReady(testService.getGoogleBook(urlOverride = Some(url), search = "", term = "").value) { result =>
+        assert(result == Left(APIError.BadAPIResponse(500, "Could not connect")))
       }
     }
   }
